@@ -10,9 +10,11 @@ class SampleGenerator:
         e_symbol = cv2.imread(constants.E_SYMBOL_PATH, cv2.IMREAD_GRAYSCALE)
         diaeresis = cv2.imread(constants.DIAERESIS_PATH, cv2.IMREAD_GRAYSCALE)
 
-        margin = config.augmentation.amplitude
+        margin = int(np.ceil(config.augmentation.amplitude))
+        self.margin = margin
         size_margined = size + 2 * margin
-        image_base = np.full((size_margined, size_margined), 255, np.uint8)
+        image_shape = (size_margined, size_margined)
+        image_base = np.full(image_shape, 255, np.uint8)
         center = size_margined // 2
 
         # add e symbol:
@@ -32,11 +34,13 @@ class SampleGenerator:
 
         self.image_base = image_base
 
-        self.augmentator = Augmentator()
+        self.augmentator = Augmentator(image_shape=image_shape)
 
     def __call__(self) -> np.ndarray:
         image = self.augmentator(self.image_base)
-
+        image = image[self.margin: -self.margin, self.margin: -self.margin]
+        image_negative = 255 - image
+        return image_negative
 
 
 
