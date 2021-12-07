@@ -5,8 +5,9 @@ from typing import Tuple
 
 class Augmentator:
     def __init__(self, image_shape: Tuple[int, int] = (128, 128)):
-        self.amplitude = config.augmentation.amplitude
-        self.kernel_sizes = (config.augmentation.size, config.augmentation.size)
+        self.amplitude = config.dataset.augmentation.amplitude
+        kernel_size = config.dataset.augmentation.size
+        self.kernel_sizes = (kernel_size, kernel_size)
         self.image_shape = image_shape
         x = np.arange(image_shape[1], dtype=np.float32)
         y = np.arange(image_shape[0], dtype=np.float32)

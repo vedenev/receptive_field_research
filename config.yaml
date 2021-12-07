@@ -1,3 +1,5 @@
-augmentation:
-  size: 5
-  amplitude: 1.2
+dataset:
+  spot_size: 1.8
+  augmentation:
+    size: 5
+    amplitude: 1.2
