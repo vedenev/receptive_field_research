@@ -3,3 +3,9 @@ dataset:
   augmentation:
     size: 5
     amplitude: 1.2
+trainer:
+  batch_size: 8
+  dataloader_num_workers: 0
+  n_steps: 10
+  num_workers: 0
+  learning_rate: 0.0003

@@ -56,7 +56,7 @@ def imshow_tensor(image):
     image = image[0, :, :]
     image = 255.0 * image
     image = image.astype(np.uint8)
-    plt.imshow(image)
+    plt.imshow(image, cmap='gray', vmin=0, vmax=255)
 
 plt.close("all")
 for batch_index in range(2):
@@ -69,10 +69,21 @@ for batch_index in range(2):
         image_mask = image_mask_all[i, :, :, :]
         #print("image.shape =", image.shape)
         #print("image_mask.shape =", image_mask.shape)
-        plt.subplot(2, 4, i + 1)
+        plt.subplot(3, 4, i + 1)
         imshow_tensor(image)
-        plt.subplot(2, 4, 4 + i + 1)
-        imshow_tensor(image_mask_all[i, :, :, :])
+        plt.colorbar()
+        plt.subplot(3, 4, 4 + i + 1)
+        imshow_tensor(image_mask_all[i, 0: 1, :, :])
+        plt.colorbar()
+        plt.subplot(3, 4, 2 * 4 + i + 1)
+        imshow_tensor(image_mask_all[i, 1: 2, :, :])
+        plt.colorbar()
 plt.show()
+
+
+#from trainer import Trainer
+#
+#trainer = Trainer()
+#trainer()
 
 

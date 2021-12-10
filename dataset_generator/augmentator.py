@@ -16,7 +16,7 @@ class Augmentator:
         self.Y = Y
 
 
-    def __call__(self, image:  np.ndarray) -> np.ndarray:
+    def __call__(self, image: np.ndarray) -> np.ndarray:
         shifts_X = self.__generate_random_smooth_image()
         shifts_Y = self.__generate_random_smooth_image()
         X_map = self.X + shifts_X

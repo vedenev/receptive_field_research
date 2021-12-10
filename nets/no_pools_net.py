@@ -10,7 +10,7 @@ class NoPoolsNet(torch.nn.Module):
                  n_featuremaps: int = 16):
         super(NoPoolsNet, self).__init__()
         self.depth = depth
-        self.convs = []
+        self.convs = torch.nn.ModuleList()
         for layer_index in range(depth):
 
             if layer_index == 0:
