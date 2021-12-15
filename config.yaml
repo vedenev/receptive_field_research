@@ -1,11 +1,16 @@
 dataset:
   spot_size: 1.8
+  image_size: 128
   augmentation:
     size: 5
     amplitude: 1.2
 trainer:
   batch_size: 8
   dataloader_num_workers: 0
-  n_steps: 10
+  n_steps: 10000
   num_workers: 0
   learning_rate: 0.0003
+post_train_evaluator:
+  n_samples: 256
+accuracy_measurer:
+  spot_measure_radius: 2.0

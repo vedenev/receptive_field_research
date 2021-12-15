@@ -6,20 +6,21 @@ from dataset_generator.augmentator import Augmentator
 from torch.utils.data import Dataset
 import typing
 import torch
+from utils.coordinates_utils import centred_coordinates
 
 
 #  https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
 
 
 class ESymbolDataset(Dataset):
-    def __init__(self, distance: int = 8, size: int = 128):
-        self.size = size
+    def __init__(self, distance: int = 8):
+        image_size = config.dataset.image_size
         e_symbol = cv2.imread(constants.E_SYMBOL_PATH, cv2.IMREAD_GRAYSCALE)
         diaeresis = cv2.imread(constants.DIAERESIS_PATH, cv2.IMREAD_GRAYSCALE)
 
         margin = int(np.ceil(config.dataset.augmentation.amplitude))
         self.margin = margin
-        size_margined = size + 2 * margin
+        size_margined = image_size + 2 * margin
         image_shape = (size_margined, size_margined)
         image_base = np.full(image_shape, 255, np.uint8)
         center = size_margined // 2
@@ -46,19 +47,13 @@ class ESymbolDataset(Dataset):
 
         self.augmentator = Augmentator(image_shape=image_shape)
 
-        x = np.arange(size).astype(np.float32)
-        y = np.arange(size).astype(np.float32)
-        X, Y = np.meshgrid(x, y)
-        center_x = np.float32(size) / 2
-        center_y = np.float32(size) / 2
-        dX = X - center_x
-        dY = Y - center_y
+        dX, dY = centred_coordinates(image_size, image_size)
         spot_size_squared = np.float32(config.dataset.spot_size) ** 2
         image_mask_base = np.exp(-(dX ** 2 + dY ** 2) / spot_size_squared)
         image_mask_base = self.__numpy_to_torch_tensor(image_mask_base)
         self.image_mask_base = image_mask_base
 
-        self.image_mask_shape = (constants.N_SYMBOLS, size, size)
+        self.image_mask_shape = (constants.N_SYMBOLS, image_size, image_size)
 
     def __len__(self) -> int:
         return 2**48  # a big number, because infinite dataset size
@@ -77,8 +72,11 @@ class ESymbolDataset(Dataset):
         image = self.__to_float32(image)
         image = self.__numpy_to_torch_tensor(image)
         image_mask = torch.from_numpy(image_mask)
+        is_diaeresis_np = np.asarray(is_diaeresis)
+        is_diaeresis_tensor = torch.from_numpy(is_diaeresis_np)
         return {'image': image,
-                'image_mask': image_mask}
+                'image_mask': image_mask,
+                'is_diaeresis': is_diaeresis_tensor}
 
     @staticmethod
     def __numpy_to_torch_tensor(image: np.ndarray) -> torch.Tensor:

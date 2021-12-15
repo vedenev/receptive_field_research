@@ -27,7 +27,7 @@ class NoPoolsNet(torch.nn.Module):
                                    n_output_featuremaps,
                                    kernel_size,
                                    padding='same')
-
+            torch.nn.init.xavier_uniform_(conv.weight)
             self.convs.append(conv)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
