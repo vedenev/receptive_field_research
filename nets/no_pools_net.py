@@ -33,5 +33,6 @@ class NoPoolsNet(torch.nn.Module):
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         for layer_index in range(self.depth):
             x = self.convs[layer_index](x)
-            x = F.relu(x)
+            if layer_index < (self.depth - 1):
+                x = F.relu(x)
         return x

@@ -84,11 +84,11 @@
 from train import Trainer
 from dataset_generator import ESymbolDataset
 dataset = ESymbolDataset()
-trainer = Trainer(dataset=dataset)
+from nets import NoPoolsNet
+net = NoPoolsNet(depth=12)
+trainer = Trainer(dataset=dataset, net=net)
 trainer()
 net = trainer.net
-data_iterator = trainer.data_iterator
-device = trainer.device
 from train import PostTrainEvaluator
 evaluator = PostTrainEvaluator(trainer=trainer)
 loss, accuracy = evaluator()
@@ -96,4 +96,12 @@ print('post train eval:', ' loss =', loss, ' accuracy =' ,accuracy)
 
 from visualization_utils.plot_metrics import plot_metrics
 plot_metrics()
+
+#data_iterator = trainer.data_iterator
+#device = trainer.device
+#from visualization_utils.show_net_images import show_net_images
+
+#show_net_images(net, data_iterator, device)
+
+
 
