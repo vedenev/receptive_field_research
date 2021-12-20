@@ -1,0 +1,59 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from typing import Tuple
+
+def limits(x: np.ndarray) -> Tuple[np.int64, np.int64, np.int64, np.ndarray]:
+    #min_ = np.min(x)
+    min_ = 1
+    max_ = np.max(x)
+    size_ = max_ - min_ + 1
+    range_ = np.arange(min_, max_ + 1)
+    return min_, max_, size_, range_
+
+def plot_field_size_vs_depth() -> None:
+    #DATA_PATH = 'experiments/results_archive/experiment_field_size_vs_depth_2021_12_15_unfinished.npy'
+    DATA_PATH = 'experiments/results_archive/experiment_field_size_vs_depth_2021_12_16_unfinished.npy'
+    data = np.load(DATA_PATH)
+    # data[train_index, :] = [distance, depth, accuracy]
+    calculated = np.nonzero(data[:, 0] > 0)[0]
+    data = data[calculated, :]
+    distances = data[:, 0]
+    distances = distances.astype(np.int64)
+    depths = data[:, 1]
+    depths = depths.astype(np.int64)
+    accuracies = data[:, 2]
+
+    distance_1, distance_2, distance_size, distance_range = limits(distances)
+    depth_1, depth_2, depth_size, depth_range = limits(depths)
+    max_x_y = max(distance_2, depth_2)
+    distance_2 = max_x_y
+    depth_2 = max_x_y
+    distance_size = distance_2 - distance_1 + 1
+    depth_size = depth_2 - depth_1 + 1
+    accuracy_table = np.full((distance_size, depth_size), np.nan, np.float32)
+    print("accuracy_table.shape =", accuracy_table.shape)
+    for train_index in range(data.shape[0]):
+        distance = distances[train_index]
+        distance_index = distance - distance_1
+        depth = depths[train_index]
+        depth_index = depth - depth_1
+        accuracy = accuracies[train_index]
+        accuracy_table[distance_index, depth_index] = accuracy
+
+    extent = [depth_1 - 0.5, depth_2 + 0.5, distance_1 - 0.5, distance_2 + 0.5]
+    plt.imshow(accuracy_table, extent=extent, aspect='auto', origin='lower')
+    plt.xlabel('depth')
+    plt.ylabel('distance')
+    max_plot = min(distance_2, depth_2)
+    plt.plot([1, max_plot], [1, max_plot], 'r-', label='y = x')
+    plt.title('accuracy')
+    plt.axis('equal')
+    plt.colorbar()
+    plt.show()
+
+
+
+
+
+
+
