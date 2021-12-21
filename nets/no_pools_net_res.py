@@ -1,6 +1,7 @@
 import torch
 import torch.nn.functional as F
 import constants
+import numpy as np
 
 
 class NoPoolsNetRes(torch.nn.Module):
@@ -8,7 +9,8 @@ class NoPoolsNetRes(torch.nn.Module):
                  depth: int = 8,
                  kernel_size: int = 3,
                  n_featuremaps: int = 16,
-                 skip_connect_step: int = 4):
+                 skip_connect_step: int = 4,
+                 is_shifted_init: bool = False):
         super(NoPoolsNetRes, self).__init__()
         self.depth = depth
         self.convs = torch.nn.ModuleList()
@@ -30,7 +32,36 @@ class NoPoolsNetRes(torch.nn.Module):
                                    n_output_featuremaps,
                                    kernel_size,
                                    padding='same')
-            torch.nn.init.xavier_uniform_(conv.weight)
+            if is_shifted_init:
+
+                #init_tensor_shape = list(conv.weight.data.shape)
+                #init_tensor_value = 2 * np.random.rand(*init_tensor_shape) - 1
+                #init_tensor_value = init_tensor_value.astype(np.float32)
+                #init_tensor_value *= 0.1 / n_input_featuremaps
+                #init_tensor_value[:, :, 0, 1] = 1.0 / n_input_featuremaps
+                #init_tensor = torch.tensor(init_tensor_value)
+                #conv.weight.data = init_tensor
+
+                #torch.nn.init.xavier_uniform_(conv.weight)
+                #conv.weight.data[:, :, 0, 1] = 1.0 / n_input_featuremaps
+
+                init_tensor_shape = list(conv.weight.data.shape)
+                #print("init_tensor_shape =", init_tensor_shape)
+                # init_tensor_shape = [16, 1, 3, 3]
+                init_tensor_value = np.random.randn(*init_tensor_shape)
+                init_tensor_value = init_tensor_value.astype(np.float32)
+                dof_shifted_base = 1 * init_tensor_shape[3]
+                dof_input = dof_shifted_base * init_tensor_shape[1]
+                dof_output = dof_shifted_base * init_tensor_shape[0]
+                mutiplier = np.sqrt((6/(dof_input + dof_output)))
+                init_tensor_value *= mutiplier
+                init_tensor_value[:, :, 1:, :] = \
+                    0.01 * init_tensor_value[:, :, 1:, :]
+                init_tensor = torch.tensor(init_tensor_value)
+                conv.weight.data = init_tensor
+            else:
+
+                torch.nn.init.xavier_uniform_(conv.weight)
             self.convs.append(conv)
 
             if layer_index % skip_connect_step == 0:

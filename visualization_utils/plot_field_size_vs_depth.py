@@ -11,8 +11,11 @@ def limits(x: np.ndarray) -> Tuple[np.int64, np.int64, np.int64, np.ndarray]:
     return min_, max_, size_, range_
 
 def plot_field_size_vs_depth() -> None:
-    #DATA_PATH = 'experiments/results_archive/experiment_field_size_vs_depth_2021_12_15_unfinished.npy'
-    DATA_PATH = 'experiments/results_archive/experiment_field_size_vs_depth_2021_12_16_unfinished.npy'
+    DATA_PATH_BASE = 'experiments/results_archive'
+    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_2021_12_16_unfinished.npy'
+    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_2021_12_20.npy'
+    DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_special_init_2021_12_21.npy'
+    DATA_PATH = DATA_PATH_BASE + '/' + DATA_PATH_FILE
     data = np.load(DATA_PATH)
     # data[train_index, :] = [distance, depth, accuracy]
     calculated = np.nonzero(data[:, 0] > 0)[0]
@@ -25,13 +28,7 @@ def plot_field_size_vs_depth() -> None:
 
     distance_1, distance_2, distance_size, distance_range = limits(distances)
     depth_1, depth_2, depth_size, depth_range = limits(depths)
-    max_x_y = max(distance_2, depth_2)
-    distance_2 = max_x_y
-    depth_2 = max_x_y
-    distance_size = distance_2 - distance_1 + 1
-    depth_size = depth_2 - depth_1 + 1
     accuracy_table = np.full((distance_size, depth_size), np.nan, np.float32)
-    print("accuracy_table.shape =", accuracy_table.shape)
     for train_index in range(data.shape[0]):
         distance = distances[train_index]
         distance_index = distance - distance_1
@@ -41,13 +38,16 @@ def plot_field_size_vs_depth() -> None:
         accuracy_table[distance_index, depth_index] = accuracy
 
     extent = [depth_1 - 0.5, depth_2 + 0.5, distance_1 - 0.5, distance_2 + 0.5]
-    plt.imshow(accuracy_table, extent=extent, aspect='auto', origin='lower')
+    plt.imshow(accuracy_table, extent=extent, origin='lower')
     plt.xlabel('depth')
     plt.ylabel('distance')
-    max_plot = min(distance_2, depth_2)
-    plt.plot([1, max_plot], [1, max_plot], 'r-', label='y = x')
-    plt.title('accuracy')
-    plt.axis('equal')
+    x = np.linspace(0, depth_2, 300)
+    y = x
+    plt.plot(x, y, 'r-', label='y = x')
+    #y = 3 * np.sqrt(x)
+    #plt.plot(x, y, 'r-', label='y = 3 * sqrt(x)')
+    plt.title('accuracy' + ', ' + DATA_PATH_FILE)
+    plt.legend(loc='lower right')
     plt.colorbar()
     plt.show()
 

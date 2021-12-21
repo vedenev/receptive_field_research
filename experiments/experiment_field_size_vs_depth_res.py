@@ -8,8 +8,8 @@ from utils import JobTimer
 
 
 def experiment_field_size_vs_depth_res():
-    distances = np.arange(7, 48 + 1)
-    depthes = np.arange(2, 48 + 1)
+    distances = np.arange(7, 28 + 1)
+    depthes = np.arange(2, 28 + 1)
     RESULT_SAVE_BASE_FILENAME = 'experiment_field_size_vs_depth_res.npy'
     save_path = constants.SAVE_EXPERIMENTS_RESULTS_DIR\
                 + '/' + RESULT_SAVE_BASE_FILENAME
@@ -22,7 +22,7 @@ def experiment_field_size_vs_depth_res():
         for depth_index in range(depthes.size):
             depth = depthes[depth_index]
             dataset = ESymbolDataset(distance=distance)
-            net = NoPoolsNetRes(depth=depth)
+            net = NoPoolsNetRes(depth=depth, is_shifted_init=True)
             trainer = Trainer(dataset=dataset, net=net)
             trainer()
             net = trainer.net
