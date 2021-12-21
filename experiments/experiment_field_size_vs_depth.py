@@ -16,9 +16,9 @@ def experiment_field_size_vs_depth():
     n_trains = distances.size * depthes.size
     save_data = np.zeros((n_trains, 3), np.float32)
     train_index = 0
+    job_timer = JobTimer()
     for distance_index in range(distances.size):
         distance = distances[distance_index]
-        job_timer = JobTimer()
         for depth_index in range(depthes.size):
             depth = depthes[depth_index]
             dataset = ESymbolDataset(distance=distance)
