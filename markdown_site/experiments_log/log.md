@@ -10,4 +10,18 @@ number of intermidiate featuremaps: 16
 ![no res connections](./field_size_vs_depth_no_res_connections.png)  
 receptive field size is O(sqrt(N)), where N is number of layers  
 after depth = 40 train are not stable probably because of [vanishing gradient problem](https://en.wikipedia.org/wiki/Vanishing_gradient_problem)  
+#### 2. Residual connections net
+convolutional layer kernel size: 3x3  
+number of intermidiate featuremaps: 16     
+[experiment_field_size_vs_depth_res.py](../../experiments/experiment_field_size_vs_depth_res.py)    
+![with res connections](./field_size_vs_depth_with_res_connections.png)  
+receptive field size is O(sqrt(N)), where N is number of layers   
+#### 3. Special initial condition
+each kernel has xavier initial condition only for the upper row of the kernel. All rest elements of the kernel is close to 0  
+convolutional layer kernel size: 3x3  
+number of intermidiate featuremaps: 16     
+[experiment_field_size_vs_depth_res.py](../../experiments/experiment_field_size_vs_depth_res.py)    
+is_shifted_init=True  
+![special init condition](./field_size_vs_depth_special_init_condition.png)  
+receptive field size is O(N), where N is number of layers  
 
