@@ -44,6 +44,19 @@ net: NoPoolsNetRes
 is_shifted_init=False  
 is_show_field=True  
 ![field size by forward pass](./field_size_vs_depth_by_forward_pass.png)  
+receptive field size is O(sqrt(N))  
+  
+#### 6. Get field size by forward pass, constant weights init
+[experiment_field_size_by_forward_pass_constant.py](../../experiments/experiment_field_size_by_forward_pass_constant.py)  
+convolutional layer kernel size: 3x3  
+number of intermidiate featuremaps: 16  
+net: NoPoolsNet  
+is_constant_init=True   
+![field size by forward pass constant](./field_size_vs_depth_by_forward_pass_constant.png)  
+receptive field size is O(sqrt(N))  
+output value along curve y= 3 * sqrt(N):  
+![field size by forward pass constant level](./field_size_vs_depth_by_forward_pass_constant_level.png)  
+the value is about 0.0012  
   
 
 
