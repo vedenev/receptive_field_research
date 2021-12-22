@@ -34,20 +34,8 @@ class NoPoolsNetRes(torch.nn.Module):
                                    padding='same')
             if is_shifted_init:
 
-                #init_tensor_shape = list(conv.weight.data.shape)
-                #init_tensor_value = 2 * np.random.rand(*init_tensor_shape) - 1
-                #init_tensor_value = init_tensor_value.astype(np.float32)
-                #init_tensor_value *= 0.1 / n_input_featuremaps
-                #init_tensor_value[:, :, 0, 1] = 1.0 / n_input_featuremaps
-                #init_tensor = torch.tensor(init_tensor_value)
-                #conv.weight.data = init_tensor
-
-                #torch.nn.init.xavier_uniform_(conv.weight)
-                #conv.weight.data[:, :, 0, 1] = 1.0 / n_input_featuremaps
 
                 init_tensor_shape = list(conv.weight.data.shape)
-                #print("init_tensor_shape =", init_tensor_shape)
-                # init_tensor_shape = [16, 1, 3, 3]
                 init_tensor_value = np.random.randn(*init_tensor_shape)
                 init_tensor_value = init_tensor_value.astype(np.float32)
                 dof_shifted_base = 1 * init_tensor_shape[3]

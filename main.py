@@ -7,11 +7,15 @@ def run_script(script : str = DEFAULT_SCRIPT):
         from experiments import experiment_field_size_vs_depth
         experiment_field_size_vs_depth()
     if script == "experiment_field_size_vs_depth_res":
-            from experiments import experiment_field_size_vs_depth_res
-            experiment_field_size_vs_depth_res()
+        from experiments import experiment_field_size_vs_depth_res
+        experiment_field_size_vs_depth_res()
     elif script == "plot_field_size_vs_depth":
         from visualization_utils import plot_field_size_vs_depth
         plot_field_size_vs_depth()
+    elif script == "experiment_field_size_vs_depth_thiner":
+        from experiments import experiment_field_size_vs_depth_thiner
+        experiment_field_size_vs_depth_thiner()
+
 
 
 if __name__ == '__main__':

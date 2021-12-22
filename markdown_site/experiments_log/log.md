@@ -15,7 +15,7 @@ convolutional layer kernel size: 3x3
 number of intermidiate featuremaps: 16     
 [experiment_field_size_vs_depth_res.py](../../experiments/experiment_field_size_vs_depth_res.py)    
 ![with res connections](./field_size_vs_depth_with_res_connections.png)  
-receptive field size is O(sqrt(N)), where N is number of layers   
+receptive field size is O(sqrt(N))  
 #### 3. Special initial condition
 each kernel has xavier initial condition only for the upper row of the kernel. All rest elements of the kernel is close to 0  
 convolutional layer kernel size: 3x3  
@@ -23,5 +23,12 @@ number of intermidiate featuremaps: 16
 [experiment_field_size_vs_depth_res.py](../../experiments/experiment_field_size_vs_depth_res.py)    
 is_shifted_init=True  
 ![special init condition](./field_size_vs_depth_special_init_condition.png)  
-receptive field size is O(N), where N is number of layers  
+receptive field size is O(N)  
+#### 4. Residual connections net, deeper
+convolutional layer kernel size: 3x3  
+number of intermidiate featuremaps: 16
+is_shifted_init=False  
+[experiment_field_size_vs_depth_res.py](../../experiments/experiment_field_size_vs_depth_res.py)    
+![with res connections, deeper](./field_size_vs_depth_with_res_connections_additional.png)  
+receptive field size is O(sqrt(N))  
 

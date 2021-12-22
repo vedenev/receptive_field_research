@@ -14,7 +14,11 @@ def plot_field_size_vs_depth() -> None:
     DATA_PATH_BASE = 'experiments/results_archive'
     #DATA_PATH_FILE = 'experiment_field_size_vs_depth_2021_12_16_unfinished.npy'
     #DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_2021_12_20.npy'
-    DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_special_init_2021_12_21.npy'
+    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_special_init_2021_12_21.npy'
+    DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_2021_12_22.npy'
+
+    IS_LINEAR_PLOT = False
+
     DATA_PATH = DATA_PATH_BASE + '/' + DATA_PATH_FILE
     data = np.load(DATA_PATH)
     # data[train_index, :] = [distance, depth, accuracy]
@@ -42,10 +46,12 @@ def plot_field_size_vs_depth() -> None:
     plt.xlabel('depth')
     plt.ylabel('distance')
     x = np.linspace(0, depth_2, 300)
-    y = x
-    plt.plot(x, y, 'r-', label='y = x')
-    #y = 3 * np.sqrt(x)
-    #plt.plot(x, y, 'r-', label='y = 3 * sqrt(x)')
+    if IS_LINEAR_PLOT:
+        y = x
+        plt.plot(x, y, 'r-', label='y = x')
+    else:
+        y = 3 * np.sqrt(x)
+        plt.plot(x, y, 'r-', label='y = 3 * sqrt(x)')
     plt.title('accuracy' + ', ' + DATA_PATH_FILE)
     plt.legend(loc='lower right')
     plt.colorbar()
