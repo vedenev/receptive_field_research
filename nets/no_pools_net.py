@@ -7,7 +7,8 @@ class NoPoolsNet(torch.nn.Module):
     def __init__(self,
                  depth: int = 8,
                  kernel_size: int = 3,
-                 n_featuremaps: int = 16):
+                 n_featuremaps: int = 16,
+                 is_constant_init: bool = False):
         super(NoPoolsNet, self).__init__()
         self.depth = depth
         self.convs = torch.nn.ModuleList()
@@ -27,7 +28,11 @@ class NoPoolsNet(torch.nn.Module):
                                    n_output_featuremaps,
                                    kernel_size,
                                    padding='same')
-            torch.nn.init.xavier_uniform_(conv.weight)
+            if is_constant_init:
+                conv.weight.data.fill_(0.01)
+                conv.bias.data.fill_(0.0)
+            else:
+                torch.nn.init.xavier_uniform_(conv.weight)
             self.convs.append(conv)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:

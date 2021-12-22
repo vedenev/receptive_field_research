@@ -1,6 +1,6 @@
 import fire
 
-DEFAULT_SCRIPT = "plot_field_size_vs_depth"
+DEFAULT_SCRIPT = "plot_field_size_by_forward_pass"
 
 def run_script(script : str = DEFAULT_SCRIPT):
     if script == "experiment_field_size_vs_depth":
@@ -15,6 +15,16 @@ def run_script(script : str = DEFAULT_SCRIPT):
     elif script == "experiment_field_size_vs_depth_thiner":
         from experiments import experiment_field_size_vs_depth_thiner
         experiment_field_size_vs_depth_thiner()
+    elif script == "experiment_field_size_by_forward_pass":
+        from experiments import experiment_field_size_by_forward_pass
+        experiment_field_size_by_forward_pass()
+    elif script == "plot_field_size_by_forward_pass":
+        from visualization_utils import plot_field_size_by_forward_pass
+        plot_field_size_by_forward_pass()
+    elif script == "experiment_field_size_by_forward_pass_constant":
+        from experiments import experiment_field_size_by_forward_pass_constant
+        experiment_field_size_by_forward_pass_constant()
+
 
 
 

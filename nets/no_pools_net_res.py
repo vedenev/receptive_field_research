@@ -10,7 +10,8 @@ class NoPoolsNetRes(torch.nn.Module):
                  kernel_size: int = 3,
                  n_featuremaps: int = 16,
                  skip_connect_step: int = 4,
-                 is_shifted_init: bool = False):
+                 is_shifted_init: bool = False,
+                 is_show_field: bool = False):
         super(NoPoolsNetRes, self).__init__()
         self.depth = depth
         self.convs = torch.nn.ModuleList()
@@ -48,7 +49,6 @@ class NoPoolsNetRes(torch.nn.Module):
                 init_tensor = torch.tensor(init_tensor_value)
                 conv.weight.data = init_tensor
             else:
-
                 torch.nn.init.xavier_uniform_(conv.weight)
             self.convs.append(conv)
 
@@ -76,6 +76,12 @@ class NoPoolsNetRes(torch.nn.Module):
             self.convs_skip.append(conv_skip)
         self.n_skips = len(self.convs_skip)
         self.skip_positions = skip_positions
+
+        if is_show_field:
+            for conv in self.convs:
+                conv.bias.data.fill_(0.0)
+            for conv_skip in self.convs_skip:
+                conv_skip.weight.data.fill_(0.0)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         skip_index = 0

@@ -31,4 +31,12 @@ is_shifted_init=False
 [experiment_field_size_vs_depth_res.py](../../experiments/experiment_field_size_vs_depth_res.py)    
 ![with res connections, deeper](./field_size_vs_depth_with_res_connections_additional.png)  
 receptive field size is O(sqrt(N))  
+#### 5. Get field size by forward pass
+[experiment_field_size_by_forward_pass.py](../../experiments/experiment_field_size_by_forward_pass.py)  
+convolutional layer kernel size: 3x3  
+number of intermidiate featuremaps: 16  
+net: NoPoolsNetRes  
+is_shifted_init=False  
+is_show_field=True  
+![field size by forward pass](./field_size_vs_depth_by_forward_pass.png)
 

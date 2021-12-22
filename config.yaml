@@ -14,3 +14,5 @@ post_train_evaluator:
   n_samples: 256
 accuracy_measurer:
   spot_measure_radius: 2.0
+by_forward_pass:
+  image_size: 768
