@@ -26,7 +26,7 @@ is_shifted_init=True
 receptive field size is O(N)  
 #### 4. Residual connections net, deeper
 convolutional layer kernel size: 3x3  
-number of intermidiate featuremaps: 16
+number of intermidiate featuremaps: 16  
 is_shifted_init=False  
 [experiment_field_size_vs_depth_res.py](../../experiments/experiment_field_size_vs_depth_res.py)    
 ![with res connections, deeper](./field_size_vs_depth_with_res_connections_additional.png)  
