@@ -59,12 +59,20 @@ output value along curve y= 3 * sqrt(N):
 the value is about 0.0012  
   
 #### 7. Decomposed initial condition, field size by forward pass
-kernel initialized with   
+[experiment_field_size_vs_depth_res_decomposed_init.py](../../experiments/experiment_field_size_vs_depth_res_decomposed_init.py)  
+kernel initialized with special values that is decomposition of convolution witch kernel is m x m matrix of ones.     
 convolutional layer kernel size: 3x3  
-number of intermidiate featuremaps: 16     
+number of intermidiate featuremaps: 16  
 [initializers.py/decomposed_init](../../initializers.py#L4)    
 ![decomposed init by pass](./field_size_vs_depth_by_forward_pass_decomposed_init.png)    
 receptive field size is O(N) until depth = 14  
+  
+#### 8. Decomposed initial condition
+[experiment_field_size_vs_depth_res_decomposed_init.py](../../experiments/experiment_field_size_vs_depth_res_decomposed_init.py)  
+convolutional layer kernel size: 3x3  
+number of intermidiate featuremaps: 16  
+![decomposed init](./field_size_vs_depth_decomposed_init.png)  
+no recognition at all, all accuracies is about 0.5  
   
 
 
