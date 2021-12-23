@@ -58,5 +58,14 @@ output value along curve y= 3 * sqrt(N):
 ![field size by forward pass constant level](./field_size_vs_depth_by_forward_pass_constant_level.png)  
 the value is about 0.0012  
   
+#### 7. Decomposed initial condition, field size by forward pass
+kernel initialized with   
+convolutional layer kernel size: 3x3  
+number of intermidiate featuremaps: 16     
+[initializers.py/decomposed_init](../../initializers.py#L4)    
+![decomposed init by pass](./field_size_vs_depth_by_forward_pass_decomposed_init.png)    
+receptive field size is O(N) until depth = 14  
+  
+
 
 
