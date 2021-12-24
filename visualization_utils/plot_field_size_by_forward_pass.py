@@ -3,7 +3,7 @@ import numpy as np
 
 def plot_field_size_by_forward_pass() -> None:
     DATA_PATH_BASE = 'experiments/results_archive'
-    DATA_PATH_FILE = 'experiment_field_size_by_forward_pass_constant_2021_12_22.npz'
+    DATA_PATH_FILE = 'experiment_field_size_by_forward_pass_fro_shifted_2021_12_24.npz'
     DATA_PATH = DATA_PATH_BASE + '/' + DATA_PATH_FILE
     npzfile = np.load(DATA_PATH)
     depthes = npzfile['depthes']

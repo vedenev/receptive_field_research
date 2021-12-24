@@ -106,14 +106,36 @@
 #from experiments import experiment_field_size_vs_depth
 #experiment_field_size_vs_depth()
 
-#from torchsummary import summary
-from torchinfo import summary
-from nets import NoPoolsNetRes
-net = NoPoolsNetRes(depth=5, skip_connect_step=4)
-device = 'cuda:0'
-net = net.to(device)
-summary(net, input_size=(1, 1, 128, 128))
+# #from torchsummary import summary
+# from torchinfo import summary
+# from nets import NoPoolsNetRes
+# net = NoPoolsNetRes(depth=5, skip_connect_step=4)
+# device = 'cuda:0'
+# net = net.to(device)
+# summary(net, input_size=(1, 1, 128, 128))
 
+
+from nets import NoPoolsNetRes
+from initializers import circular_init
+import numpy as np
+import matplotlib.pyplot as plt
+import torch
+depth = 4
+image_size = 64
+center = image_size // 2
+net = NoPoolsNetRes(depth=depth, is_shifted_init=False)
+circular_init(net)
+input_image = np.zeros((1, 1, image_size, image_size), np.float32)
+input_image[0, 0, center, center] = 1.0
+input_image = torch.from_numpy(input_image)
+net.eval()
+output_image = net(input_image)
+output_image_2 = output_image[0, 0, :, :]
+output_image_2_np = output_image_2.cpu().detach().numpy()
+
+plt.imshow(output_image_2_np)
+plt.colorbar()
+plt.show()
 
 
 

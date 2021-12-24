@@ -4,6 +4,7 @@ dataset:
   augmentation:
     size: 5
     amplitude: 1.2
+  dot_angle_range_degrees: 360
 trainer:
   batch_size: 8
   dataloader_num_workers: 0
