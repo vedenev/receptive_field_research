@@ -75,7 +75,7 @@ number of intermidiate featuremaps: 16
 no recognition at all, all accuracies is about 0.5  
   
 #### 9. Circular initial condition
-[experiment_field_size_vs_depth_dot_circular.py](../../experiments/experiment_field_size_vs_depth_dot_circular.py)
+[experiment_field_size_vs_depth_dot_circular.py](../../experiments/experiment_field_size_vs_depth_dot_circular.py)  
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 16  
 [initializers.py/circular_init](../../initializers.py#L51)  
