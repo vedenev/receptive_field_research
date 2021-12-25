@@ -16,9 +16,11 @@ def plot_field_size_vs_depth() -> None:
     #DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_2021_12_20.npy'
     #DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_special_init_2021_12_21.npy'
     #DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_2021_12_22.npy'
-    DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_decomposed_init_2021_12_23.npy'
+    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_decomposed_init_2021_12_23.npy'
+    DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_circular_2021_12_24.npy'
+    DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_circular_2021_12_25_unfinished.npy'
 
-    IS_LINEAR_PLOT = True
+    IS_LINEAR_PLOT = False
 
     DATA_PATH = DATA_PATH_BASE + '/' + DATA_PATH_FILE
     data = np.load(DATA_PATH)

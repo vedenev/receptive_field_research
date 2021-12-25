@@ -120,7 +120,7 @@ from initializers import circular_init
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
-depth = 4
+depth = 5
 image_size = 64
 center = image_size // 2
 net = NoPoolsNetRes(depth=depth, is_shifted_init=False)

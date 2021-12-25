@@ -51,6 +51,8 @@ def decomposed_init(net: torch.nn.Module) -> None:
 def circular_init(net: torch.nn.Module) -> None:
     N = len(net.convs)
 
+    CIRCULAR_AMPLITUDE = 0.2
+
     n_featuremaps = list(net.convs[1].weight.shape)[0]
 
     from config import config
@@ -67,46 +69,33 @@ def circular_init(net: torch.nn.Module) -> None:
     radii = radii.reshape((radii.size, 1))
     X = radii * np.cos(angles)
     Y = radii * np.sin(angles)
-    #import matplotlib.pyplot as plt
-    #plt.imshow(Y)
-    #plt.colorbar()
-    #plt.show()
+    X = np.round(X).astype(np.int64)
+    Y = np.round(Y).astype(np.int64)
     dX = np.diff(X, axis=0)
     dY = np.diff(Y, axis=0)
-    dX = np.round(dX).astype(np.int64)
-    dY = np.round(dY).astype(np.int64)
+
     i = 0
     for conv in net.convs:
         shape = list(conv.weight.shape)
 
 
-        weight_to_set_np = np.zeros(shape, np.float32)
+        #weight_to_set_np = np.zeros(shape, np.float32)
+        torch.nn.init.xavier_uniform_(conv.weight)
+        weight_to_set_np = conv.weight.cpu().detach().numpy()
         if i == (len(net.convs) - 1):
             weight_to_set_np[:, :, 1, 1] = 1.0
         else:
             index_limit = max(shape[0], shape[1])
             for index in range(index_limit):
-                dx = 1 + dX[i, index]
-                dy = 1 + dY[i, index]
+                dx0 = dX[i, index]
+                dy0 = dY[i, index]
+                dx = 1 + dx0
+                dy = 1 + dy0
                 input_index = min(index, shape[1] - 1)
                 output_index = min(index, shape[0] - 1)
-                weight_to_set_np[output_index, input_index, dy, dx] = 1.0
-        #import matplotlib.pyplot as plt
-        #plt.imshow(np.sum(weight_to_set_np, axis=(0, 1)))
-        #plt.title(str(dX[i, :]) + '  ' + str(dY[i, :]))
-        #plt.colorbar()
-        #plt.show()
+                weight_to_set_np[output_index, input_index, dy, dx] = CIRCULAR_AMPLITUDE
 
-        print("i =", i)
-        import matplotlib.pyplot as plt
-        plt.figure()
-        j = 1
-        for yt in range(weight_to_set_np.shape[0]):
-            for xt in range(weight_to_set_np.shape[1]):
-                plt.subplot(weight_to_set_np.shape[0], weight_to_set_np.shape[1], j)
-                plt.imshow(weight_to_set_np[yt, xt, :, :])
-                plt.colorbar()
-                j += 1
+        #weight_to_set_np += 0.02 * (2 * np.random.rand(*weight_to_set_np.shape) - 1)
         weight_to_set = torch.from_numpy(weight_to_set_np)
         conv.weight.data = weight_to_set.data
 
@@ -114,7 +103,6 @@ def circular_init(net: torch.nn.Module) -> None:
 
         i += 1
 
-    plt.show()
 
     for conv_skip in net.convs_skip:
         conv_skip.weight.data.fill_(0.0)
