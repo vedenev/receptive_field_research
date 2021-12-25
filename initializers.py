@@ -106,3 +106,79 @@ def circular_init(net: torch.nn.Module) -> None:
 
     for conv_skip in net.convs_skip:
         conv_skip.weight.data.fill_(0.0)
+
+
+def circular_init_version_2(net: torch.nn.Module) -> None:
+    N = len(net.convs)
+
+    DECREASE_FACTOR = 0.01
+
+    n_featuremaps = list(net.convs[1].weight.shape)[0]
+
+    from config import config
+    angle_degrees = config.dataset.dot_angle_range_degrees
+    angle = angle_degrees * np.pi / 180
+    if angle_degrees == 360:
+        angles = np.linspace(0, 2 * np.pi, n_featuremaps + 1)[0: -1]
+    else:
+        angle_1 = 3 * np.pi / 2 - angle
+        angle_2 = 3 * np.pi / 2 + angle
+        angles = np.linspace(angle_1, angle_2, n_featuremaps)
+    angles = angles.reshape((1, angles.size))
+    radii = np.arange(0, N + 1)
+    radii = radii.reshape((radii.size, 1))
+    X = radii * np.cos(angles)
+    Y = radii * np.sin(angles)
+    X = np.round(X).astype(np.int64)
+    Y = np.round(Y).astype(np.int64)
+    dX = np.diff(X, axis=0)
+    dY = np.diff(Y, axis=0)
+
+    i = 0
+    for conv in net.convs:
+        shape = list(conv.weight.shape)
+
+
+        #weight_to_set_np = np.zeros(shape, np.float32)
+        torch.nn.init.xavier_uniform_(conv.weight)
+        weight_to_set_np = conv.weight.cpu().detach().numpy()
+        torch.nn.init.xavier_uniform_(conv.weight)
+        weight_to_set_np_2 = conv.weight.cpu().detach().numpy()
+        if i == (len(net.convs) - 1):
+            weight_to_set_np = weight_to_set_np_2
+        else:
+            index_limit = max(shape[0], shape[1])
+            weight_to_set_np_3 = np.copy(weight_to_set_np)
+            weight_to_set_np *= DECREASE_FACTOR
+            for index in range(index_limit):
+                dx0 = dX[i, index]
+                dy0 = dY[i, index]
+                #dx = 1 + dx0
+                #dy = 1 + dy0
+                input_index = min(index, shape[1] - 1)
+                output_index = min(index, shape[0] - 1)
+                #weight_to_set_np[output_index, input_index, dy, dx] = CIRCULAR_AMPLITUDE
+
+                weight_to_set_np[output_index, input_index, :, :] = \
+                    DECREASE_FACTOR * weight_to_set_np_2[output_index, input_index, :, :]
+
+                y1_src, y2_src, y1_dst, y2_dst = copy_indexes(dy0)
+                x1_src, x2_src, x1_dst, x2_dst = copy_indexes(dx0)
+
+                weight_to_set_np[output_index, input_index, y1_dst: y2_dst, x1_dst: x2_dst] = \
+                    weight_to_set_np_3[output_index, input_index, y1_src: y2_src, x1_src: x2_src]
+
+
+
+
+        #weight_to_set_np += 0.02 * (2 * np.random.rand(*weight_to_set_np.shape) - 1)
+        weight_to_set = torch.from_numpy(weight_to_set_np)
+        conv.weight.data = weight_to_set.data
+
+        conv.bias.data.fill_(0.0)
+
+        i += 1
+
+
+    for conv_skip in net.convs_skip:
+        conv_skip.weight.data.fill_(0.0)

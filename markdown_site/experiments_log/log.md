@@ -81,7 +81,14 @@ number of intermidiate featuremaps: 16
 [initializers.py/circular_init](../../initializers.py#L51)  
 circular amplitude: 0.2  
 angle: 360 degrees  
-![circular init](./field_size_vs_depth_circular_init_0_2_decemated_less.png)  
+![circular init](./field_size_vs_depth_circular_init_0_2_decemated_less.png)   
+  
+#### 10. Circular initial condition, no circular init condition, just xavier init
+[experiment_field_size_vs_depth_dot_circular.py](../../experiments/experiment_field_size_vs_depth_dot_circular.py)  
+convolutional layer kernel size: 3x3  
+number of intermidiate featuremaps: 16  
+angle: 360 degrees  
+![circular init, no](./field_size_vs_depth_circular_init_no_circ_init.png) 
   
 
 
