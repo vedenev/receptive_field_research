@@ -1,5 +1,6 @@
 import torch
 import numpy as np
+from typing import Tuple
 
 def decomposed_init(net: torch.nn.Module) -> None:
     N = len(net.convs)
@@ -108,11 +109,29 @@ def circular_init(net: torch.nn.Module) -> None:
         conv_skip.weight.data.fill_(0.0)
 
 
+def copy_indexes(dx0: int) -> Tuple[int, int, int, int]:
+    if dx0 == 0:
+        x1_src = 0
+        x2_src = 3
+        x1_dst = 0
+        x2_dst = 3
+    elif dx0 == -1:
+        x1_src = 1
+        x2_src = 3
+        x1_dst = 0
+        x2_dst = 2
+    elif dx0 == 1:
+        x1_src = 0
+        x2_src = 2
+        x1_dst = 1
+        x2_dst = 3
+    return x1_src, x2_src, x1_dst, x2_dst
+
+
 def circular_init_version_2(net: torch.nn.Module) -> None:
     N = len(net.convs)
 
-    DECREASE_FACTOR = 0.01
-
+    DECREASE_FACTOR = 0.6
     n_featuremaps = list(net.convs[1].weight.shape)[0]
 
     from config import config
@@ -139,39 +158,28 @@ def circular_init_version_2(net: torch.nn.Module) -> None:
         shape = list(conv.weight.shape)
 
 
-        #weight_to_set_np = np.zeros(shape, np.float32)
         torch.nn.init.xavier_uniform_(conv.weight)
         weight_to_set_np = conv.weight.cpu().detach().numpy()
-        torch.nn.init.xavier_uniform_(conv.weight)
-        weight_to_set_np_2 = conv.weight.cpu().detach().numpy()
         if i == (len(net.convs) - 1):
-            weight_to_set_np = weight_to_set_np_2
+            pass
         else:
+            torch.nn.init.xavier_uniform_(conv.weight)
+            weight_to_set_np_2 = conv.weight.cpu().detach().numpy()
             index_limit = max(shape[0], shape[1])
-            weight_to_set_np_3 = np.copy(weight_to_set_np)
             weight_to_set_np *= DECREASE_FACTOR
             for index in range(index_limit):
                 dx0 = dX[i, index]
                 dy0 = dY[i, index]
-                #dx = 1 + dx0
-                #dy = 1 + dy0
                 input_index = min(index, shape[1] - 1)
                 output_index = min(index, shape[0] - 1)
-                #weight_to_set_np[output_index, input_index, dy, dx] = CIRCULAR_AMPLITUDE
-
-                weight_to_set_np[output_index, input_index, :, :] = \
-                    DECREASE_FACTOR * weight_to_set_np_2[output_index, input_index, :, :]
 
                 y1_src, y2_src, y1_dst, y2_dst = copy_indexes(dy0)
                 x1_src, x2_src, x1_dst, x2_dst = copy_indexes(dx0)
 
                 weight_to_set_np[output_index, input_index, y1_dst: y2_dst, x1_dst: x2_dst] = \
-                    weight_to_set_np_3[output_index, input_index, y1_src: y2_src, x1_src: x2_src]
+                    weight_to_set_np_2[output_index, input_index, y1_src: y2_src, x1_src: x2_src]
 
 
-
-
-        #weight_to_set_np += 0.02 * (2 * np.random.rand(*weight_to_set_np.shape) - 1)
         weight_to_set = torch.from_numpy(weight_to_set_np)
         conv.weight.data = weight_to_set.data
 
