@@ -93,7 +93,7 @@ angle: 360 degrees
 #### 11. Circular initial condition, version 2, 0.6 no circular init condition, just xavier init
 [experiment_field_size_vs_depth_dot_circular.py](../../experiments/experiment_field_size_vs_depth_dot_circular.py)  
 convolutional layer kernel size: 3x3  
-number of intermidiate featuremaps: 16
+number of intermidiate featuremaps: 16  
 DECREASE_FACTOR = 0.6  
 angle: 360 degrees  
 [initializers.py/circular_init_version_2](../../initializers.py#L131)  
