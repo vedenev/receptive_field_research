@@ -99,6 +99,12 @@ angle: 360 degrees
 [initializers.py/circular_init_version_2](../../initializers.py#L131)  
 ![circular init v2](./field_size_vs_depth_circular_init_v2_0_6.png)  
   
+#### 12. Circular initial condition, no circular init condition, just xavier init, 180 degs
+[experiment_field_size_vs_depth_dot_circular.py](../../experiments/experiment_field_size_vs_depth_dot_circular.py)  
+convolutional layer kernel size: 3x3  
+number of intermidiate featuremaps: 16  
+angle: 180 degrees  
+![circular init, no](./field_size_vs_depth_circular_init_no_circ_init_180_degs.png) 
   
 
 

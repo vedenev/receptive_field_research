@@ -5,13 +5,13 @@ from train import PostTrainEvaluator
 import numpy as np
 import constants
 from utils import JobTimer
-from initializers import circular_init_version_2
+from initializers import circular_init
 
 
 def experiment_field_size_vs_depth_dot_circular():
     distances = np.arange(7, 24 + 1, 2)
     depthes = np.arange(3, 48 + 1, 2)
-    RESULT_SAVE_BASE_FILENAME = 'experiment_field_size_vs_depth_dot_circular_v2.npy'
+    RESULT_SAVE_BASE_FILENAME = 'experiment_field_size_vs_depth_dot_180.npy'
     save_path = constants.SAVE_EXPERIMENTS_RESULTS_DIR\
                 + '/' + RESULT_SAVE_BASE_FILENAME
     n_trains = distances.size * depthes.size
@@ -24,7 +24,7 @@ def experiment_field_size_vs_depth_dot_circular():
             depth = depthes[depth_index]
             dataset = ESymbolDotDataset(distance=distance)
             net = NoPoolsNetRes(depth=depth, is_shifted_init=False)
-            circular_init_version_2(net)
+            circular_init(net)
             trainer = Trainer(dataset=dataset, net=net)
             trainer()
             net = trainer.net
