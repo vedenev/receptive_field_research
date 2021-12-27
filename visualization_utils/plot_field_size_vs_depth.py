@@ -21,7 +21,8 @@ def plot_field_size_vs_depth() -> None:
     #DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_circular_2021_12_25_unfinished.npy'
     #DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_circular_no_init_2021_12_25.npy'
     #DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_circular_v2_0_6_2021_12_26.npy'
-    DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_180_no_init_2021_12_26_unfinished.npy'
+    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_180_no_init_2021_12_26_unfinished.npy'
+    DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_180.npy'
 
     IS_LINEAR_PLOT = False
 

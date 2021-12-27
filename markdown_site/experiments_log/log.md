@@ -106,6 +106,14 @@ number of intermidiate featuremaps: 16
 angle: 180 degrees  
 ![circular init, no](./field_size_vs_depth_circular_init_no_circ_init_180_degs.png) 
   
+  
+#### 13. Circular initial condition 180 degs
+[experiment_field_size_vs_depth_dot_circular.py](../../experiments/experiment_field_size_vs_depth_dot_circular.py)  
+convolutional layer kernel size: 3x3  
+number of intermidiate featuremaps: 16  
+angle: 180 degrees  
+![circular init](./field_size_vs_depth_circular_init_180_degs.png) 
+  
 
 
 

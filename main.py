@@ -1,6 +1,6 @@
 import fire
 
-DEFAULT_SCRIPT = "experiment_field_size_vs_depth_dot_circular"
+DEFAULT_SCRIPT = "plot_field_size_vs_depth"
 
 def run_script(script : str = DEFAULT_SCRIPT):
     if script == "experiment_field_size_vs_depth":
