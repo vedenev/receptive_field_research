@@ -11,7 +11,7 @@ from initializers import circular_init
 def experiment_field_size_vs_depth_dot_circular():
     distances = np.arange(7, 24 + 1, 2)
     depthes = np.arange(3, 48 + 1, 2)
-    RESULT_SAVE_BASE_FILENAME = 'experiment_field_size_vs_depth_dot_180.npy'
+    RESULT_SAVE_BASE_FILENAME = 'experiment_field_size_vs_depth_dot_360_no_init_x2_wider.npy'
     save_path = constants.SAVE_EXPERIMENTS_RESULTS_DIR\
                 + '/' + RESULT_SAVE_BASE_FILENAME
     n_trains = distances.size * depthes.size
@@ -23,8 +23,8 @@ def experiment_field_size_vs_depth_dot_circular():
         for depth_index in range(depthes.size):
             depth = depthes[depth_index]
             dataset = ESymbolDotDataset(distance=distance)
-            net = NoPoolsNetRes(depth=depth, is_shifted_init=False)
-            circular_init(net)
+            net = NoPoolsNetRes(depth=depth, is_shifted_init=False, n_featuremaps=32)
+            #circular_init(net)
             trainer = Trainer(dataset=dataset, net=net)
             trainer()
             net = trainer.net

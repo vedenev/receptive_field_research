@@ -114,6 +114,13 @@ number of intermidiate featuremaps: 16
 angle: 180 degrees  
 ![circular init](./field_size_vs_depth_circular_init_180_degs.png) 
   
+#### 14. Xavier initial condition 360 degs, wide 2x
+[experiment_field_size_vs_depth_dot_circular.py](../../experiments/experiment_field_size_vs_depth_dot_circular.py)  
+convolutional layer kernel size: 3x3  
+number of intermidiate featuremaps: 32  
+angle: 360 degrees  
+![wider](./experiment_field_size_vs_depth_dot_360_no_init_x2_wider.png) 
+  
 
 
 
