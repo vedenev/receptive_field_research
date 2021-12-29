@@ -5,6 +5,7 @@ from train import PostTrainEvaluator
 import numpy as np
 import constants
 from utils import JobTimer
+import torch
 
 
 def experiment_field_size_resnet50():
@@ -18,9 +19,11 @@ def experiment_field_size_resnet50():
     job_timer = JobTimer()
     for distance_index in range(distances.size):
         distance = distances[distance_index]
-        dataset = ESymbolDataset(distance=distance)
+        dataset = ESymbolDataset(distance=distance, )
         net = fcn_resnet50(num_classes=constants.N_SYMBOLS,
                            pretrained=False)
+        net.backbone.conv1 = torch.nn.Conv2d(1, 64, kernel_size=7, stride=2,
+                                             padding=3, bias=False)
         trainer = Trainer(dataset=dataset, net=net)
         trainer()
         net = trainer.net

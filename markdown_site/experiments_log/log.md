@@ -126,7 +126,13 @@ angle: 360 degrees
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 8  
 angle: 360 degrees  
-![narrower](./experiment_field_size_vs_depth_dot_360_no_init_x2_narrower.png)  
+![narrower](./experiment_field_size_vs_depth_dot_360_no_init_x2_narrower.png)
+
+#### 15. ResNet50, receptive field by forward pass
+[experiment_field_size_resnet50_by_forward_pass.py](../../experiments/experiment_field_size_resnet50_by_forward_pass.py)  
+![resnet, field, heatmap](./field_size_vs_depth_by_forward_pass_resnet_hetamap.png)  
+![resnet, field, profile](./field_size_vs_depth_by_forward_pass_resnet_profile.png)  
+field radius at 0.0012 level is 75 pixels  
   
 
 

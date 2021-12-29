@@ -187,6 +187,15 @@ def circular_init_version_2(net: torch.nn.Module) -> None:
 
         i += 1
 
-
     for conv_skip in net.convs_skip:
         conv_skip.weight.data.fill_(0.0)
+
+
+def resnet_constant_init(net: torch.nn.Module) -> None:
+    for name, param in net.named_parameters():
+        if 'bias' in name:
+            param.data.fill_(0.0)
+        elif 'weight' in name and len(param.shape) == 1:
+            param.data.fill_(1.0)
+        elif 'weight' in name and len(param.shape) == 4:
+            param.data.fill_(0.01)

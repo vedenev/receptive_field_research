@@ -1,6 +1,6 @@
 dataset:
   spot_size: 1.8
-  image_size: 128
+  image_size: 448
   augmentation:
     size: 5
     amplitude: 1.2
