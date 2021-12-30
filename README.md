@@ -1,3 +1,3 @@
 # Receptive field research
 
-[experiments log](markdown_site/experiments_log/log.md)
+[experiments log](markdown_site/expereiments_log.md)

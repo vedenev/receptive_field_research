@@ -7,7 +7,7 @@ white color - no data
 #### 1. No residual connection net  
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 16     
-[experiment_field_size_vs_depth.py](../../experiments/experiment_field_size_vs_depth.py)    
+[experiment_field_size_vs_depth.py](../experiments/experiment_field_size_vs_depth.py)    
 ![no res connections](./field_size_vs_depth_no_res_connections.png)  
 receptive field size is O(sqrt(N)), where N is number of layers  
 after depth = 40 train are not stable probably because of [vanishing gradient problem](https://en.wikipedia.org/wiki/Vanishing_gradient_problem)  
@@ -15,7 +15,7 @@ after depth = 40 train are not stable probably because of [vanishing gradient pr
 #### 2. Residual connections net
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 16     
-[experiment_field_size_vs_depth_res.py](../../experiments/experiment_field_size_vs_depth_res.py)    
+[experiment_field_size_vs_depth_res.py](../experiments/experiment_field_size_vs_depth_res.py)    
 ![with res connections](./field_size_vs_depth_with_res_connections.png)  
 receptive field size is O(sqrt(N))  
     
@@ -23,7 +23,7 @@ receptive field size is O(sqrt(N))
 each kernel has xavier initial condition only for the upper row of the kernel. All rest elements of the kernel is close to 0  
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 16     
-[experiment_field_size_vs_depth_res.py](../../experiments/experiment_field_size_vs_depth_res.py)    
+[experiment_field_size_vs_depth_res.py](../experiments/experiment_field_size_vs_depth_res.py)    
 is_shifted_init=True  
 ![special init condition](./field_size_vs_depth_special_init_condition.png)  
 receptive field size is O(N)  
@@ -32,12 +32,12 @@ receptive field size is O(N)
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 16  
 is_shifted_init=False  
-[experiment_field_size_vs_depth_res.py](../../experiments/experiment_field_size_vs_depth_res.py)    
+[experiment_field_size_vs_depth_res.py](../experiments/experiment_field_size_vs_depth_res.py)    
 ![with res connections, deeper](./field_size_vs_depth_with_res_connections_additional.png)  
 receptive field size is O(sqrt(N))  
     
 #### 5. Get field size by forward pass
-[experiment_field_size_by_forward_pass.py](../../experiments/experiment_field_size_by_forward_pass.py)  
+[experiment_field_size_by_forward_pass.py](../experiments/experiment_field_size_by_forward_pass.py)  
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 16  
 net: NoPoolsNetRes  
@@ -47,7 +47,7 @@ is_show_field=True
 receptive field size is O(sqrt(N))  
   
 #### 6. Get field size by forward pass, constant weights init
-[experiment_field_size_by_forward_pass_constant.py](../../experiments/experiment_field_size_by_forward_pass_constant.py)  
+[experiment_field_size_by_forward_pass_constant.py](../experiments/experiment_field_size_by_forward_pass_constant.py)  
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 16  
 net: NoPoolsNet  
@@ -59,48 +59,48 @@ output value along curve y= 3 * sqrt(N):
 the value is about 0.0012  
   
 #### 7. Decomposed initial condition, field size by forward pass
-[experiment_field_size_vs_depth_res_decomposed_init.py](../../experiments/experiment_field_size_vs_depth_res_decomposed_init.py)  
+[experiment_field_size_vs_depth_res_decomposed_init.py](../experiments/experiment_field_size_vs_depth_res_decomposed_init.py)  
 kernel initialized with special values that is decomposition of convolution witch kernel is m x m matrix of ones.     
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 16  
-[initializers.py/decomposed_init](../../initializers.py#L4)    
+[initializers.py/decomposed_init](../initializers.py#L4)    
 ![decomposed init by pass](./field_size_vs_depth_by_forward_pass_decomposed_init.png)    
 receptive field size is O(N) until depth = 14  
   
 #### 8. Decomposed initial condition
-[experiment_field_size_vs_depth_res_decomposed_init.py](../../experiments/experiment_field_size_vs_depth_res_decomposed_init.py)  
+[experiment_field_size_vs_depth_res_decomposed_init.py](../experiments/experiment_field_size_vs_depth_res_decomposed_init.py)  
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 16  
 ![decomposed init](./field_size_vs_depth_decomposed_init.png)  
 no recognition at all, all accuracies is about 0.5  
   
 #### 9. Circular initial condition
-[experiment_field_size_vs_depth_dot_circular.py](../../experiments/experiment_field_size_vs_depth_dot_circular.py)  
+[experiment_field_size_vs_depth_dot_circular.py](../experiments/experiment_field_size_vs_depth_dot_circular.py)  
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 16  
-[initializers.py/circular_init](../../initializers.py#L51)  
+[initializers.py/circular_init](../initializers.py#L51)  
 circular amplitude: 0.2  
 angle: 360 degrees  
 ![circular init](./field_size_vs_depth_circular_init_0_2_decemated_less.png)   
   
 #### 10. Circular initial condition, no circular init condition, just xavier init
-[experiment_field_size_vs_depth_dot_circular.py](../../experiments/experiment_field_size_vs_depth_dot_circular.py)  
+[experiment_field_size_vs_depth_dot_circular.py](../experiments/experiment_field_size_vs_depth_dot_circular.py)  
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 16  
 angle: 360 degrees  
 ![circular init, no](./field_size_vs_depth_circular_init_no_circ_init.png)  
   
 #### 11. Circular initial condition, version 2, 0.6 no circular init condition, just xavier init
-[experiment_field_size_vs_depth_dot_circular.py](../../experiments/experiment_field_size_vs_depth_dot_circular.py)  
+[experiment_field_size_vs_depth_dot_circular.py](../experiments/experiment_field_size_vs_depth_dot_circular.py)  
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 16  
 DECREASE_FACTOR = 0.6  
 angle: 360 degrees  
-[initializers.py/circular_init_version_2](../../initializers.py#L131)  
+[initializers.py/circular_init_version_2](../initializers.py#L131)  
 ![circular init v2](./field_size_vs_depth_circular_init_v2_0_6.png)  
   
 #### 12. Circular initial condition, no circular init condition, just xavier init, 180 degs
-[experiment_field_size_vs_depth_dot_circular.py](../../experiments/experiment_field_size_vs_depth_dot_circular.py)  
+[experiment_field_size_vs_depth_dot_circular.py](../experiments/experiment_field_size_vs_depth_dot_circular.py)  
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 16  
 angle: 180 degrees  
@@ -108,34 +108,34 @@ angle: 180 degrees
   
   
 #### 13. Circular initial condition 180 degs
-[experiment_field_size_vs_depth_dot_circular.py](../../experiments/experiment_field_size_vs_depth_dot_circular.py)  
+[experiment_field_size_vs_depth_dot_circular.py](../experiments/experiment_field_size_vs_depth_dot_circular.py)  
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 16  
 angle: 180 degrees  
 ![circular init](./field_size_vs_depth_circular_init_180_degs.png) 
   
 #### 14. Xavier initial condition 360 degs, wider 2x
-[experiment_field_size_vs_depth_dot_circular.py](../../experiments/experiment_field_size_vs_depth_dot_circular.py)  
+[experiment_field_size_vs_depth_dot_circular.py](../experiments/experiment_field_size_vs_depth_dot_circular.py)  
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 32  
 angle: 360 degrees  
 ![wider](./experiment_field_size_vs_depth_dot_360_no_init_x2_wider.png) 
 
 #### 14. Xavier initial condition 360 degs, narrower 2x
-[experiment_field_size_vs_depth_dot_circular.py](../../experiments/experiment_field_size_vs_depth_dot_circular.py)  
+[experiment_field_size_vs_depth_dot_circular.py](../experiments/experiment_field_size_vs_depth_dot_circular.py)  
 convolutional layer kernel size: 3x3  
 number of intermidiate featuremaps: 8  
 angle: 360 degrees  
 ![narrower](./experiment_field_size_vs_depth_dot_360_no_init_x2_narrower.png)
 
 #### 15. ResNet50, receptive field by forward pass
-[experiment_field_size_resnet50_by_forward_pass.py](../../experiments/experiment_field_size_resnet50_by_forward_pass.py)  
+[experiment_field_size_resnet50_by_forward_pass.py](../experiments/experiment_field_size_resnet50_by_forward_pass.py)  
 ![resnet, field, heatmap](./field_size_vs_depth_by_forward_pass_resnet_hetamap.png)  
 ![resnet, field, profile](./field_size_vs_depth_by_forward_pass_resnet_profile.png)  
 field radius at 0.0012 level is 59 pixels  
 
 #### 16. ResNet50, receptive field
-[experiment_field_size_resnet50.py](../../experiments/experiment_field_size_resnet50.py)  
+[experiment_field_size_resnet50.py](../experiments/experiment_field_size_resnet50.py)  
 ![resnet, field](./field_size_resnet.png)    
 field size radius is about 60 pixels, but it has nonzero probability to be trained at bigger radius  
 
