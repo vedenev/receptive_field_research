@@ -1,5 +1,5 @@
 from train import Trainer
-from torchvision.models.segmentation import fcn_resnet50
+from nets import get_resnet_50_adapted
 from dataset_generator import ESymbolDataset
 from train import PostTrainEvaluator
 import numpy as np
@@ -9,7 +9,7 @@ import torch
 
 
 def experiment_field_size_resnet50():
-    distances = np.arange(7, 48 + 1)
+    distances = np.arange(8, 110 + 1, 2)
     RESULT_SAVE_BASE_FILENAME = 'experiment_field_size_vs_depth_resnet50.npy'
     save_path = constants.SAVE_EXPERIMENTS_RESULTS_DIR \
         + '/' + RESULT_SAVE_BASE_FILENAME
@@ -20,10 +20,7 @@ def experiment_field_size_resnet50():
     for distance_index in range(distances.size):
         distance = distances[distance_index]
         dataset = ESymbolDataset(distance=distance, )
-        net = fcn_resnet50(num_classes=constants.N_SYMBOLS,
-                           pretrained=False)
-        net.backbone.conv1 = torch.nn.Conv2d(1, 64, kernel_size=7, stride=2,
-                                             padding=3, bias=False)
+        net = get_resnet_50_adapted()
         trainer = Trainer(dataset=dataset, net=net)
         trainer()
         net = trainer.net

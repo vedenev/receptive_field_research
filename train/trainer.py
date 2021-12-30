@@ -7,6 +7,7 @@ from torch.utils.data import Dataset
 from torch.optim import optimizer
 from torch.nn.modules import loss
 from train import MetricsMeasurer
+from collections import OrderedDict
 
 
 class Trainer:
@@ -60,12 +61,15 @@ class Trainer:
             is_diaeresis = batch["is_diaeresis"]
             self.optimizer.zero_grad()
             prediction = self.net(image)
+            if type(prediction) == OrderedDict:
+                # special case for resnet
+                prediction = prediction["out"]
             loss = self.loss_function(prediction, image_mask)
             loss_value, accuracy, batch_size = \
                 self.measurer.process_batch(is_diaeresis,
                                             prediction,
                                             loss)
-            #print(loss_value, accuracy)
+            #print(step_index, loss_value, accuracy)
             loss.backward()
             self.optimizer.step()
 

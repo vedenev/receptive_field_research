@@ -1,6 +1,6 @@
 import fire
 
-DEFAULT_SCRIPT = "experiment_field_size_resnet50_by_forward_pass"
+DEFAULT_SCRIPT = "plot_field_size_resnet"
 
 def run_script(script : str = DEFAULT_SCRIPT):
     if script == "experiment_field_size_vs_depth":
@@ -48,6 +48,12 @@ def run_script(script : str = DEFAULT_SCRIPT):
     elif script == "experiment_field_size_resnet50_by_forward_pass":
         from experiments import experiment_field_size_resnet50_by_forward_pass
         experiment_field_size_resnet50_by_forward_pass()
+    elif script == "experiment_field_size_resnet50":
+        from experiments import experiment_field_size_resnet50
+        experiment_field_size_resnet50()
+    elif script == "plot_field_size_resnet":
+        from visualization_utils import plot_field_size_resnet
+        plot_field_size_resnet()
 
 
 if __name__ == '__main__':

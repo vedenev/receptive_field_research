@@ -132,9 +132,13 @@ angle: 360 degrees
 [experiment_field_size_resnet50_by_forward_pass.py](../../experiments/experiment_field_size_resnet50_by_forward_pass.py)  
 ![resnet, field, heatmap](./field_size_vs_depth_by_forward_pass_resnet_hetamap.png)  
 ![resnet, field, profile](./field_size_vs_depth_by_forward_pass_resnet_profile.png)  
-field radius at 0.0012 level is 75 pixels  
+field radius at 0.0012 level is 59 pixels  
+
+#### 16. ResNet50, receptive field
+[experiment_field_size_resnet50.py](../../experiments/experiment_field_size_resnet50.py)  
+![resnet, field](./field_size_resnet.png)    
+field size radius is about 60 pixels, but it has nonzero probability to be trained at bigger radius  
+
   
-
-
-
+  
 

@@ -1,12 +1,12 @@
 dataset:
   spot_size: 1.8
-  image_size: 448
+  image_size: 224
   augmentation:
     size: 5
     amplitude: 1.2
   dot_angle_range_degrees: 360
 trainer:
-  batch_size: 8
+  batch_size: 4
   dataloader_num_workers: 0
   n_steps: 3000
   num_workers: 4

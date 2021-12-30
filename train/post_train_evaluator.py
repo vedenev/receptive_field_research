@@ -4,6 +4,7 @@ import numpy as np
 from typing import Tuple
 from train import Trainer
 from train import MetricsMeasurer
+from collections import OrderedDict
 
 class PostTrainEvaluator:
     def __init__(self, trainer: Trainer = None):
@@ -28,7 +29,9 @@ class PostTrainEvaluator:
                 image_mask = image_mask.to(self.device)
                 is_diaeresis = batch["is_diaeresis"]
                 prediction = self.net(image)
-
+                if type(prediction) == OrderedDict:
+                    # special case for resnet
+                    prediction = prediction["out"]
                 loss_batch = self.loss_function(prediction, image_mask)
                 loss_value, accuracy, batch_size = \
                     self.measurer.process_batch(is_diaeresis,
