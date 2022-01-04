@@ -40,7 +40,7 @@
 #plt.show()
 
 # from dataset_generator import ESymbolDataset
-# e_symbol_dataset = ESymbolDataset()
+# e_symbol_dataset = ESymbolDataset(distance=28)
 # from torch.utils.data import DataLoader
 # data_loader = DataLoader(e_symbol_dataset, batch_size=4,
 #                         shuffle=False, num_workers=0)
@@ -115,26 +115,69 @@
 # summary(net, input_size=(1, 1, 128, 128))
 
 
-from nets import NoPoolsNetRes
-from initializers import circular_init
-import numpy as np
-import matplotlib.pyplot as plt
-import torch
-depth = 5
-image_size = 64
-center = image_size // 2
-net = NoPoolsNetRes(depth=depth, is_shifted_init=False)
-circular_init(net)
-input_image = np.zeros((1, 1, image_size, image_size), np.float32)
-input_image[0, 0, center, center] = 1.0
-input_image = torch.from_numpy(input_image)
-net.eval()
-output_image = net(input_image)
-output_image_2 = output_image[0, 0, :, :]
-output_image_2_np = output_image_2.cpu().detach().numpy()
+# from nets import NoPoolsNetRes
+# from initializers import circular_init
+# import numpy as np
+# import matplotlib.pyplot as plt
+# import torch
+# depth = 5
+# image_size = 64
+# center = image_size // 2
+# net = NoPoolsNetRes(depth=depth, is_shifted_init=False)
+# circular_init(net)
+# input_image = np.zeros((1, 1, image_size, image_size), np.float32)
+# input_image[0, 0, center, center] = 1.0
+# input_image = torch.from_numpy(input_image)
+# net.eval()
+# output_image = net(input_image)
+# output_image_2 = output_image[0, 0, :, :]
+# output_image_2_np = output_image_2.cpu().detach().numpy()
+#
+# plt.imshow(output_image_2_np)
+# plt.colorbar()
+# plt.show()
 
-plt.imshow(output_image_2_np)
-plt.colorbar()
+
+
+from dataset_generator import ESymbolDotDataset
+e_symbol_dataset = ESymbolDotDataset(distance=28)
+from torch.utils.data import DataLoader
+data_loader = DataLoader(e_symbol_dataset, batch_size=4,
+                        shuffle=False, num_workers=0)
+data_iterator = iter(data_loader)
+#print("data_iterator =", data_iterator)
+#batch = next(data_iterator)
+#print("batch =", batch)
+#print('batch["image"].shape =', batch["image"].shape)
+import matplotlib.pyplot as plt
+import numpy as np
+def imshow_tensor(image):
+    image = image.numpy()
+    image = image[0, :, :]
+    image = 255.0 * image
+    image = image.astype(np.uint8)
+    plt.imshow(image, cmap='gray', vmin=0, vmax=255)
+
+plt.close("all")
+for batch_index in range(2):
+    batch = next(data_iterator)
+    plt.figure()
+    image_all = batch["image"]
+    image_mask_all = batch["image_mask"]
+    for i in range(4):
+        image = image_all[i, :, :, :]
+        image_mask = image_mask_all[i, :, :, :]
+        #print("image.shape =", image.shape)
+        #print("image_mask.shape =", image_mask.shape)
+        plt.subplot(3, 4, i + 1)
+        imshow_tensor(image)
+        plt.colorbar()
+        plt.subplot(3, 4, 4 + i + 1)
+        imshow_tensor(image_mask_all[i, 0: 1, :, :])
+        plt.colorbar()
+        plt.subplot(3, 4, 2 * 4 + i + 1)
+        imshow_tensor(image_mask_all[i, 1: 2, :, :])
+        plt.colorbar()
 plt.show()
 
 

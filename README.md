@@ -53,15 +53,52 @@ Size of the kernel is 3x3 so sigma_i = 3
 Then size of the final distribution is sqrt(sigma^2) = sigma = sqrt(sum(3^2)) = O(sqrt(N))  
 Please note: there is no any random variables inside the convolution.  
 Theory of probability was used just to get the final O(sqrt(N)).  
+In case of the net with pool we need to increase kernel sizes.  
+For example we have a net: 3x3 convolution - 2x2 pool - 3x3 convolution, then we need to use:  
+```sqrt(3^2 + (3*2)^2)```  
+here we have 3*2 because after pooling featuremaps has decreased in 2 times resolution.  
+
   
 #### 4. e dataset and no pooling net  
 A set of experiments was think out to check the theoretical field size.
 Fully convolutional neural net was used. For simplicity, it has no pooling layers.  
+The code of the net: [no_pools_net_res.py](./nets/no_pools_net_res.py)  
 Special synthetic dataset was used:  
 It can be considered as OCR task (optical character recognition) with only 2 possible letters:  
 е  
 ё  
-   
+Russian letter е can have diaeresis. The diaeresis is double dot above the letter.  
+Russian е with the diaeresis is another letter.  
+e always has fixed position in the center of the image.  
+Distance between e and the diaeresis is adjustable.  
+It is detection task. The task is to find center of e.  
+There are 2 featuremaps on the output of the nets.  
+One for е and one for ё.  
+Center of the letter encoded with small gaussian spot.  
+![e dataset](./markdown_site/picture_e_dataset.png)   
+First row is input image, second row is featuremap for е, third row is featuremap for ё.  
+Bigger distance:
+![e dataset big dist](./markdown_site/picture_e_dataset_bigger_distance.png)   
+The task of the net is to predict to right spot.  
+How the е/ё decission is made:  
+if mean value of small area in the center of the output е-featuremap is higher
+than in ё-featuremap then it is e symbol, ё otherwise.  
+Accuracy is calculated.   
+Accuracy is number of correct answers divided by number of all answers.   
+If the receptive field size of the net will be too small, than the accuracy expected to be close to 0.5 (random guess).  
+If the size is high enough then the accuracy is close to 1.0.  
+That is how the receptive field size can be found:  
+we can scan distance to diaeresis until the accuracy drops from 1.0 to 0.5.  
+The dataset code: [e_symbol_dataset.py](./dataset_generator/e_symbol_dataset.py)  
+There are more difficult dataset also:  
+![e dataset dot](./markdown_site/picture_e_dataset_dot.png)  
+Here the diaeresis is a dot.  
+And the dot can be at any place around the e at fixed predefined distance.
+The dataset code: [e_symbol_dot_dataset.py](./dataset_generator/e_symbol_dot_dataset.py)  
+This dataset has higher variability. 
+Small scale elastic augmentation are used, see: [augmentator.py](./dataset_generator/augmentator.py)  
+
+ 
   
 
 

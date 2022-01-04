@@ -1,5 +1,5 @@
 # Experiments log
-accuracy - number of correct unswers devided by number of answers  
+accuracy - number of correct answers divided by number of all answers  
 depth - depth of a neural net, number of convolutional layers  
 distance - distance in pixels from center of the input image where e symbol is paced and diaeresis  
 white color - no data  
