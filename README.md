@@ -57,7 +57,11 @@ In case of the net with pool we need to increase kernel sizes.
 For example we have a net: 3x3 convolution - 2x2 pool - 3x3 convolution, then we need to use:  
 ```sqrt(3^2 + (3*2)^2)```  
 here we have 3*2 because after pooling featuremaps has decreased in 2 times resolution.  
-
+Another way to get O(sqrt(N)):  
+Let we have net of convolutional N layers with fixed kernel size.  
+Then degrees of freedom is O(N).
+To encode a field size R we need to have degrees of freedom O(R^2).
+Thus R^2 = O(N) or R = O(sqrt(N))   
   
 #### 4. e dataset and no pooling net  
 A set of experiments was think out to check the theoretical field size.
@@ -95,9 +99,26 @@ There are more difficult dataset also:
 Here the diaeresis is a dot.  
 And the dot can be at any place around the e at fixed predefined distance.
 The dataset code: [e_symbol_dot_dataset.py](./dataset_generator/e_symbol_dot_dataset.py)  
-This dataset has higher variability. 
-Small scale elastic augmentation are used, see: [augmentator.py](./dataset_generator/augmentator.py)  
+This dataset has higher variability.  
+Small scale elastic augmentation are used in all datasets, see: [augmentator.py](./dataset_generator/augmentator.py)  
 
+  
+#### 5. Get O(sqrt(N)) by experiment.  
+Neural net with no pool layers was used and with residual connections:  
+[no_pools_net_res.py](./nets/no_pools_net_res.py)  
+convolutional layer kernel size: 3x3  
+number of intermidiate featuremaps: 16
+Weight initialization was xavier. 
+e-symbol dataset with diaeresis was used: [e_symbol_dataset.py](./dataset_generator/e_symbol_dataset.py)        
+experiemnt code: [experiment_field_size_vs_depth_res.py](./experiments/experiment_field_size_vs_depth_res.py)  
+result:      
+![with res connections](./markdown_site/field_size_vs_depth_with_res_connections.png)  
+depth is number of convolutional layers.  
+distance is distance between e and the diaeresis.  
+receptive field size is O(sqrt(N))
+  
+#### 6. Get O(N) by experiment, with special initial condition.  
+The same net and dataset like in [point 5](#5-get-osqrtn-by-experiment)
  
   
 
