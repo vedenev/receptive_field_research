@@ -1,6 +1,6 @@
 import fire
 
-DEFAULT_SCRIPT = "plot_field_size_resnet"
+DEFAULT_SCRIPT = "experiment_field_size_by_forward_pass_constant_output_image"
 
 def run_script(script : str = DEFAULT_SCRIPT):
     if script == "experiment_field_size_vs_depth":
@@ -54,6 +54,9 @@ def run_script(script : str = DEFAULT_SCRIPT):
     elif script == "plot_field_size_resnet":
         from visualization_utils import plot_field_size_resnet
         plot_field_size_resnet()
+    elif script == "experiment_field_size_by_forward_pass_constant_output_image":
+        from experiments import experiment_field_size_by_forward_pass_constant_output_image
+        experiment_field_size_by_forward_pass_constant_output_image()
 
 
 if __name__ == '__main__':

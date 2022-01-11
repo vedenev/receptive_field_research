@@ -118,8 +118,60 @@ distance is distance between e and the diaeresis.
 receptive field size is O(sqrt(N))
   
 #### 6. Get O(N) by experiment, with special initial condition.  
-The same net and dataset like in [point 5](#5-get-osqrtn-by-experiment)
+The same net and dataset like in [point 5](#5-get-osqrtn-by-experiment) but another weights initial condition:  
+Each kernel has xavier initial condition only for the upper row of the kernel.  
+All rest elements of the kernel is close to 0.  
+Thus each kernel have 1 pixel shift up closer to the diaeresis.  
+In the theory mu = sum(mu_i) is not zero but O(N).  
+So we expect that it can detect at O(N) distance.   
+Script: [experiment_field_size_vs_depth_res.py](./experiments/experiment_field_size_vs_depth_res.py)  
+with is_shifted_init=True      
+Result:  
+![special](./markdown_site/field_size_vs_depth_special_init_condition.png)  
+The distance is O(N) as expected. 
+
+#### 7. Estimate field size before train.  
+There are pool layers in a real net.  
+Thus filed size dependency is more complex than O(sqrt(N))  
+So we need a way to estimate the field size.  
+Let's check this with no-pool net.  
+Input image is image where all pixels values is 0 except one pixel in the center of the image.  
+It has value 1.
+We set all kernel values to positive constant 0.01.  
+All bias are set to 0.  
+Thus ReLUs has no influence.  
+Then we make the forward pass and get output image with blurred spot:
+![field](./markdown_site/field_by_forward_pass.png)  
+The size of the blurred spot is the estimation for the receptive field size.  
+Thus we can scan the estimated field size with net done.   
+See [experiment_field_size_by_forward_pass_constant.py](./experiments/experiment_field_size_by_forward_pass_constant.py)  
+Result:  
+![field size by forward pass constant](./markdown_site/field_size_vs_depth_by_forward_pass_constant.png)  
+In this picture along y axis we have radial profile of the blurred spot.  
+The value along y = 3 * sqrt(x) curve is about 0.0012.   
+We get the same sqrt dependency with xavier weights:
+![field size by forward pass](./markdown_site/field_size_vs_depth_by_forward_pass.png)
+See [experiment_field_size_by_forward_pass.py](./experiments/experiment_field_size_by_forward_pass.py)  
+
+#### 8. Check field size estimation for ResNet50.  
+Let estimate the receptive field size for the ResNet50 and then check it by experiment.  
+Let set all kernel values to 0.01. Biases is set to 0.
+Batch norm linear coefficients to 1.0., shift to 0.
+Result:
+![resnet, field, heatmap](./markdown_site/field_size_vs_depth_by_forward_pass_resnet_hetamap.png)  
+![resnet, field, profile](./markdown_site/field_size_vs_depth_by_forward_pass_resnet_profile.png)  
+field radius at 0.0012 level is 59 pixels  
+See script: [experiment_field_size_resnet50_by_forward_pass.py](./experiments/experiment_field_size_resnet50_by_forward_pass.py)   
+Now let get field size experimentally with the e-dataset:
+![resnet, field](./markdown_site/field_size_resnet.png)    
+Field size radius is about 60 pixels, but it has nonzero probability to be trained at bigger radius.  
+See script: [experiment_field_size_resnet50.py](./experiments/experiment_field_size_resnet50.py)  
+In total estimation (59) is close to experimental value (60).  
+
+  
+
  
+
   
 
 
