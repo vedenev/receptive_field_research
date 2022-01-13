@@ -155,10 +155,12 @@ See [experiment_field_size_by_forward_pass.py](./experiments/experiment_field_si
 
 #### 8. Check field size estimation for ResNet50.  
 Let estimate the receptive field size for the ResNet50 and then check it by experiment.  
-Let set all kernel values to 0.01. Biases is set to 0.
-Batch norm linear coefficients to 1.0., shift to 0.
-Result:
+Let set all kernel values to 0.01. Biases are set to 0.
+Batch norm linear coefficients to 1.0., shift to 0.  
+Result:  
+Output:  
 ![resnet, field, heatmap](./markdown_site/field_size_vs_depth_by_forward_pass_resnet_hetamap.png)  
+Output radial profile:  
 ![resnet, field, profile](./markdown_site/field_size_vs_depth_by_forward_pass_resnet_profile.png)  
 field radius at 0.0012 level is 59 pixels  
 See script: [experiment_field_size_resnet50_by_forward_pass.py](./experiments/experiment_field_size_resnet50_by_forward_pass.py)   
@@ -167,6 +169,35 @@ Now let get field size experimentally with the e-dataset:
 Field size radius is about 60 pixels, but it has nonzero probability to be trained at bigger radius.  
 See script: [experiment_field_size_resnet50.py](./experiments/experiment_field_size_resnet50.py)  
 In total estimation (59) is close to experimental value (60).  
+  
+#### 9. Tries to get field size bigger then O(sqrt(N)) by special initial conditions.
+In [point 6](#6-get-on-by-experiment-with-special-initial-condition) we got O(N) for e-dataset.  
+Here we had initial conditions with mu_i is not zero.  
+We know that diaeresis is placed above e. So we made up shift.  
+What if we have a feature that can be in a random place of a region?  
+I tried to make universal initial conditions that can have receptive field size bigger than O(sqrt(N)).
+##### Decomposed initial condition
+If we set biases to 0 and intermediate featuremaps has all positive values then ReLU has no influence.  
+In this case sequence of convolutions can be considered as one convolution of a bigger size.  
+For example N 3x3 convolutions is one ```(2*N + 1) x (2*N + 1)``` convolution.
+Let this big convolution has all elements equal to 1.0.  
+What sequence of 3x3 convolutions is equal to this big convolution?  
+The answer if follow:  
+```
+kernel = [[1               -2*cos(k*phi)     1            ]
+           -2*cos(k*phi)   4*cos(k*phi)**2   -2*cos(k*phi)]
+          [1               -2*cos(k*phi)     1            ]]
+``` 
+where 
+```k = 1..N - index number of a 3x3 kernel```  
+```phi = 2*pi / (2*N+1)```  
+In the [formulas page](./markdown_site/formulas_page.md) you can get the way how I got the formula.  
+
+
+  
+
+
+
 
   
 
