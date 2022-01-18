@@ -194,9 +194,50 @@ where
 In the [formulas page](./markdown_site/formulas_page.md) you can get the way how I got the formula.  
 I set this initial condition and got O(N) for forward pass before train:
 ![decomposed init by pass](./markdown_site/field_size_vs_depth_by_forward_pass_decomposed_init.png)  
-    
+x-axis: net depth, numbner of convolution layers  
+y-axis: radial profile of the spot.      
 code: [experiment_field_size_vs_depth_res_decomposed_init.py](./experiments/experiment_field_size_vs_depth_res_decomposed_init.py)  
-initializer: [initializers.py/decomposed_init](./initializers.py#L5)    
+initializer: [initializers.py/decomposed_init](./initializers.py#L5)  
+The radial profile is constant as expected.      
+O(N) - as expected.  
+But we have instability at depth about 12.
+This is because float32 precision used. It is not enough for depth 12 and more.  
+The calculation error is accumulated from layer to layer.  
+Formulas are correct.  
+Also I trained the net with this initial condition and with e-dataset and got no result:  
+![decomposed init](./markdown_site/field_size_vs_depth_decomposed_init.png)  
+no recognition at all, all accuracies is about 0.5  
+code: [experiment_field_size_vs_depth_res_decomposed_init.py](./experiments/experiment_field_size_vs_depth_res_decomposed_init.py)  
+Thus this initial condition doesn't help.  
+##### Circular initial condition  
+  
+In this experiment I used dot dataset  
+[e_symbol_dot_dataset.py](./dataset_generator/e_symbol_dot_dataset.py)  
+See [point 4](#4-e-dataset-and-no-pooling-net)  
+In this dataset the dot can be at any angle from 0 to 360 degrees.  
+Thus we don't know where is the dot.
+So we need to make shifts in kernels all directions.  
+Convolutional layer has 16 input featuremaps and 16 output featuremap. 
+We can consider the net as 16 nets that goes in parallel.  
+Each net or data path serves shift at specific angle.  
+All 360 degrees was divided at 16 rays.  
+One 3x3 kernel can make only 8 possible shifts:  
+dx = 1   dy = 0  
+dx = 1   dy = 1  
+dx = 0   dy = 1  
+dx = -1   dy = 1  
+dx = -1   dy = 0  
+dx = -1   dy = -1  
+dx = 0   dy = -1  
+dx = 1   dy = -1  
+If we have N 3x3 kernels we can make shift along ray that goes at any angles.    
+See the intializer code:  [initializers.py/circular_init](./initializers.py#L52)  
+It use np.rand and np.diff.  
+The task is similar to [line drawing algorithm](https://en.wikipedia.org/wiki/Line_drawing_algorithm).  
+todo: describe comparizon fo two picures  
+ 
+  
+   
     
   
 
