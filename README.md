@@ -196,7 +196,7 @@ I set this initial condition and got O(N) for forward pass before train:
 ![decomposed init by pass](./markdown_site/field_size_vs_depth_by_forward_pass_decomposed_init.png)  
     
 code: [experiment_field_size_vs_depth_res_decomposed_init.py](./experiments/experiment_field_size_vs_depth_res_decomposed_init.py)  
-initializer: [initializers.py/decomposed_init](./initializers.py#L4)    
+initializer: [initializers.py/decomposed_init](./initializers.py#L5)    
     
   
 
