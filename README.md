@@ -183,16 +183,22 @@ For example N 3x3 convolutions is one ```(2*N + 1) x (2*N + 1)``` convolution.
 Let this big convolution has all elements equal to 1.0.  
 What sequence of 3x3 convolutions is equal to this big convolution?  
 The answer if follow:  
-```
+```text
 kernel = [[1               -2*cos(k*phi)     1            ]
-           -2*cos(k*phi)   4*cos(k*phi)**2   -2*cos(k*phi)]
+          [-2*cos(k*phi)   4*cos(k*phi)**2   -2*cos(k*phi)]
           [1               -2*cos(k*phi)     1            ]]
 ``` 
 where 
 ```k = 1..N - index number of a 3x3 kernel```  
 ```phi = 2*pi / (2*N+1)```  
 In the [formulas page](./markdown_site/formulas_page.md) you can get the way how I got the formula.  
-
+I set this initial condition and got O(N) for forward pass before train:
+![decomposed init by pass](./markdown_site/field_size_vs_depth_by_forward_pass_decomposed_init.png)  
+    
+code: [experiment_field_size_vs_depth_res_decomposed_init.py](./experiments/experiment_field_size_vs_depth_res_decomposed_init.py)  
+initializer: [initializers.py/decomposed_init](./initializers.py#L4)    
+    
+  
 
   
 

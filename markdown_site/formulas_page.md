@@ -50,10 +50,16 @@ where ```phi = 2 * pi / (2*N + 1)```
 in this case N = 2  
 Generalization for 1d case for any N:  
 ```[1  -2*cos(1 * phi) 1] * [1  -2*cos(2 * phi) 1] * ... * [[1  -2*cos(N * phi) 1] =```  
-```[1 1 ... 1]``` 
+```[1 1 ... 1]```   
 One can check that this formulas are correct by writing a code.  
-Of cause this formula strong mathematical evidence. I didn't made it.  
-
+Of cause this formula requires strong mathematical evidence. I didn't made it.  
+For 2d case we need to convolve 1x3 and 3x1 kernels:  
+```[[1  -2*cos(k * phi) 1]] * [[1]  [-2*cos(k * phi)] [1]] =```  
+```text
+[[1               -2*cos(k*phi)     1            ]
+  [-2*cos(k*phi)   4*cos(k*phi)**2   -2*cos(k*phi)]
+  [1               -2*cos(k*phi)     1            ]]
+``` 
   
 
 
