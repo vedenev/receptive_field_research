@@ -110,7 +110,7 @@ convolutional layer kernel size: 3x3
 number of intermidiate featuremaps: 16
 Weight initialization was xavier. 
 e-symbol dataset with diaeresis was used: [e_symbol_dataset.py](./dataset_generator/e_symbol_dataset.py)        
-experiemnt code: [experiment_field_size_vs_depth_res.py](./experiments/experiment_field_size_vs_depth_res.py)  
+experiment code: [experiment_field_size_vs_depth_res.py](./experiments/experiment_field_size_vs_depth_res.py)  
 result:      
 ![with res connections](./markdown_site/field_size_vs_depth_with_res_connections.png)  
 depth is number of convolutional layers.  
@@ -194,7 +194,7 @@ where
 In the [formulas page](./markdown_site/formulas_page.md) you can get the way how I got the formula.  
 I set this initial condition and got O(N) for forward pass before train:
 ![decomposed init by pass](./markdown_site/field_size_vs_depth_by_forward_pass_decomposed_init.png)  
-x-axis: net depth, numbner of convolution layers  
+x-axis: net depth, number of convolution layers  
 y-axis: radial profile of the spot.      
 code: [experiment_field_size_vs_depth_res_decomposed_init.py](./experiments/experiment_field_size_vs_depth_res_decomposed_init.py)  
 initializer: [initializers.py/decomposed_init](./initializers.py#L5)  
@@ -245,12 +245,16 @@ Circular initialization:
 Circular initialization has O(sqrt(N)) not O(N).  
 Circular initialization has bigger receptive field then usual xavier:  
 compare it at depth = 15:
-maximal distance for circular initialization is 9
+maximal distance for circular initialization is 9  
 for xavier it is 7
 with circular initialization it does not train after depth = 33.  
 In total: circular initialization increase receptive field size at 30% but it is O(sqrt(N)).    
+    
+#### 10. Conclusion
+Receptive filed size is O(sqrt(N)).  
+Only specific dataset and specific initial condition can get size bigger than O(sqrt(N)).  
   
-  
+ 
    
     
   
