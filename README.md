@@ -231,11 +231,25 @@ dx = -1   dy = -1
 dx = 0   dy = -1  
 dx = 1   dy = -1  
 If we have N 3x3 kernels we can make shift along ray that goes at any angles.    
-See the intializer code:  [initializers.py/circular_init](./initializers.py#L52)  
+See the initializer code:  [initializers.py/circular_init](./initializers.py#L52)  
 It use np.rand and np.diff.  
 The task is similar to [line drawing algorithm](https://en.wikipedia.org/wiki/Line_drawing_algorithm).  
-todo: describe comparizon fo two picures  
- 
+Let compare results of xavier initialization and this circular initialization:
+
+Usual Xavier initialization:  
+![circular init, no](./markdown_site/field_size_vs_depth_circular_init_no_circ_init.png)   
+    
+Circular initialization:  
+![circular init](./markdown_site/field_size_vs_depth_circular_init_0_2_decemated_less.png)
+
+Circular initialization has O(sqrt(N)) not O(N).  
+Circular initialization has bigger receptive field then usual xavier:  
+compare it at depth = 15:
+maximal distance for circular initialization is 9
+for xavier it is 7
+with circular initialization it does not train after depth = 33.  
+In total: circular initialization increase receptive field size at 30% but it is O(sqrt(N)).    
+  
   
    
     
