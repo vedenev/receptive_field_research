@@ -64,7 +64,7 @@ To encode a field size R we need to have degrees of freedom O(R^2).
 Thus R^2 = O(N) or R = O(sqrt(N))   
   
 #### 4. e dataset and no pooling net  
-A set of experiments was think out to check the theoretical field size.
+A set of experiments was think out to check the theoretical field size.  
 Fully convolutional neural net was used. For simplicity, it has no pooling layers.  
 The code of the net: [no_pools_net_res.py](./nets/no_pools_net_res.py)  
 Special synthetic dataset was used:  
