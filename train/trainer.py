@@ -40,9 +40,9 @@ class Trainer:
 
         if optimizer_class is None:
             optimizer_class = torch.optim.Adam
-        optimizer = optimizer_class(net.parameters(),
+        optimizer_current = optimizer_class(net.parameters(),
                                     lr=config.trainer.learning_rate)
-        self.optimizer = optimizer
+        self.optimizer = optimizer_current
 
         if loss_function is None:
             loss_function = torch.nn.MSELoss(reduction='mean')

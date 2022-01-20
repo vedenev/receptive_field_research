@@ -1,10 +1,13 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+DATA_PATH_BASE = 'experiments/results_archive'
+DATA_PATH_FILE = \
+    'experiment_field_size_by_forward_pass_decomposed_init_2021_12_23.npz'
+DATA_PATH = DATA_PATH_BASE + '/' + DATA_PATH_FILE
+
+
 def plot_field_size_by_forward_pass_decomposed_init() -> None:
-    DATA_PATH_BASE = 'experiments/results_archive'
-    DATA_PATH_FILE = 'experiment_field_size_by_forward_pass_decomposed_init_2021_12_23.npz'
-    DATA_PATH = DATA_PATH_BASE + '/' + DATA_PATH_FILE
     npzfile = np.load(DATA_PATH)
     depthes = npzfile['depthes']
     radial_x_centred = npzfile['radial_x_centred']
@@ -23,7 +26,5 @@ def plot_field_size_by_forward_pass_decomposed_init() -> None:
     plt.title('output' + ', ' + DATA_PATH_FILE)
     plt.legend(loc='upper left')
     plt.colorbar()
-
-
 
     plt.show()

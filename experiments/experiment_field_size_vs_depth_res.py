@@ -6,11 +6,13 @@ import numpy as np
 import constants
 from utils import JobTimer
 
+RESULT_SAVE_BASE_FILENAME = 'experiment_field_size_vs_depth_res.npy'
 
-def experiment_field_size_vs_depth_res():
+
+def experiment_field_size_vs_depth_res() -> None:
     distances = np.arange(16, 24 + 1)
     depthes = np.arange(48, 56 + 1)
-    RESULT_SAVE_BASE_FILENAME = 'experiment_field_size_vs_depth_res.npy'
+
     save_path = constants.SAVE_EXPERIMENTS_RESULTS_DIR\
                 + '/' + RESULT_SAVE_BASE_FILENAME
     n_trains = distances.size * depthes.size
@@ -25,7 +27,6 @@ def experiment_field_size_vs_depth_res():
             net = NoPoolsNetRes(depth=depth, is_shifted_init=False)
             trainer = Trainer(dataset=dataset, net=net)
             trainer()
-            net = trainer.net
 
             evaluator = PostTrainEvaluator(trainer=trainer)
             loss, accuracy = evaluator()

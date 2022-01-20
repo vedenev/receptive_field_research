@@ -6,6 +6,7 @@ from train import Trainer
 from train import MetricsMeasurer
 from collections import OrderedDict
 
+
 class PostTrainEvaluator:
     def __init__(self, trainer: Trainer = None):
         self.net = trainer.net
@@ -14,8 +15,6 @@ class PostTrainEvaluator:
         self.device = trainer.device
         self.n_samples = config.post_train_evaluator.n_samples
         self.measurer = MetricsMeasurer(is_save=False)
-
-
 
     def __call__(self) -> Tuple[np.float32, np.float32]:
         self.net.eval()

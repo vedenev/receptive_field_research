@@ -4,11 +4,14 @@ import constants
 from config import config
 import torch
 
-def experiment_field_size_by_forward_pass_constant():
+RESULT_SAVE_BASE_FILENAME = 'experiment_field_size_by_forward_pass_constant.npz'
+
+
+def experiment_field_size_by_forward_pass_constant() -> None:
     depthes = np.arange(1, 192 + 1)
-    RESULT_SAVE_BASE_FILENAME = 'experiment_field_size_by_forward_pass_constant.npz'
-    save_path = constants.SAVE_EXPERIMENTS_RESULTS_DIR\
-                + '/' + RESULT_SAVE_BASE_FILENAME
+
+    save_path = constants.SAVE_EXPERIMENTS_RESULTS_DIR + \
+                '/' + RESULT_SAVE_BASE_FILENAME
     image_size = config.by_forward_pass.image_size
     center = image_size // 2
     radial_x = np.arange(center, image_size)
@@ -31,11 +34,7 @@ def experiment_field_size_by_forward_pass_constant():
         radial_np = radial_np / np.max(radial_np)
         save_data[:, depth_index] = radial_np
 
-
     np.savez(save_path,
              depthes=depthes,
              radial_x_centred=radial_x_centred,
              save_data=save_data)
-
-
-

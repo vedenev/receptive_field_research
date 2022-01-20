@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import constants
 import numpy as np
 
+
 def plot_metrics():
     data_path = constants.SAVE_METRICS_PATH
     data = np.load(data_path)

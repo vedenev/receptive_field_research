@@ -244,9 +244,9 @@ Circular initialization:
 
 Circular initialization has O(sqrt(N)) not O(N).  
 Circular initialization has bigger receptive field then usual xavier:  
-compare it at depth = 15:
+compare it at depth = 15:  
 maximal distance for circular initialization is 9  
-for xavier it is 7
+for xavier it is 7  
 with circular initialization it does not train after depth = 33.  
 In total: circular initialization increase receptive field size at 30% but it is O(sqrt(N)).    
     

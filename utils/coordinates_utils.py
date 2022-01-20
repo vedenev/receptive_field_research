@@ -1,7 +1,9 @@
 import numpy as np
 from typing import Tuple
 
-def centred_coordinates(width: int, height: int) -> Tuple[np.ndarray, np.ndarray]:
+
+def centred_coordinates(width: int,
+                        height: int) -> Tuple[np.ndarray, np.ndarray]:
     x = np.arange(width).astype(np.float32)
     y = np.arange(height).astype(np.float32)
     X, Y = np.meshgrid(x, y)

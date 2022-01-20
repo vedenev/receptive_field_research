@@ -5,9 +5,9 @@ import constants
 
 def get_resnet_50_adapted() -> torch.nn.Module:
     net = fcn_resnet50(
-        pretrained = False,
-        progress = True,
-        num_classes = constants.N_SYMBOLS,
+        pretrained=False,
+        progress=True,
+        num_classes=constants.N_SYMBOLS,
     )
 
     net.backbone.conv1 = torch.nn.Conv2d(constants.N_INPUT_CHANNELS,

@@ -2,6 +2,26 @@ import matplotlib.pyplot as plt
 import numpy as np
 from typing import Tuple
 
+DATA_PATH_BASE = 'experiments/results_archive'
+#DATA_PATH_FILE = 'experiment_field_size_vs_depth_2021_12_16_unfinished.npy'
+#DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_2021_12_20.npy'
+#DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_special_init_2021_12_21.npy'
+#DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_2021_12_22.npy'
+#DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_decomposed_init_2021_12_23.npy'
+#DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_circular_2021_12_24.npy'
+#DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_circular_2021_12_25_unfinished.npy'
+#DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_circular_no_init_2021_12_25.npy'
+#DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_circular_v2_0_6_2021_12_26.npy'
+#DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_180_no_init_2021_12_26_unfinished.npy'
+#DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_180.npy'
+#DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_360_no_init_x2_wider_2021_12_28.npy'
+DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_360_no_init_x2_narrower_2021_12_29_unfinished.npy'
+
+IS_LINEAR_PLOT = False
+
+DATA_PATH = DATA_PATH_BASE + '/' + DATA_PATH_FILE
+
+
 def limits(x: np.ndarray) -> Tuple[np.int64, np.int64, np.int64, np.ndarray]:
     #min_ = np.min(x)
     min_ = 1
@@ -10,25 +30,8 @@ def limits(x: np.ndarray) -> Tuple[np.int64, np.int64, np.int64, np.ndarray]:
     range_ = np.arange(min_, max_ + 1)
     return min_, max_, size_, range_
 
+
 def plot_field_size_vs_depth() -> None:
-    DATA_PATH_BASE = 'experiments/results_archive'
-    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_2021_12_16_unfinished.npy'
-    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_2021_12_20.npy'
-    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_special_init_2021_12_21.npy'
-    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_2021_12_22.npy'
-    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_res_decomposed_init_2021_12_23.npy'
-    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_circular_2021_12_24.npy'
-    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_circular_2021_12_25_unfinished.npy'
-    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_circular_no_init_2021_12_25.npy'
-    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_circular_v2_0_6_2021_12_26.npy'
-    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_180_no_init_2021_12_26_unfinished.npy'
-    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_180.npy'
-    #DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_360_no_init_x2_wider_2021_12_28.npy'
-    DATA_PATH_FILE = 'experiment_field_size_vs_depth_dot_360_no_init_x2_narrower_2021_12_29_unfinished.npy'
-
-    IS_LINEAR_PLOT = False
-
-    DATA_PATH = DATA_PATH_BASE + '/' + DATA_PATH_FILE
     data = np.load(DATA_PATH)
     # data[train_index, :] = [distance, depth, accuracy]
     calculated = np.nonzero(data[:, 0] > 0)[0]

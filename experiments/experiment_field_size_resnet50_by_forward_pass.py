@@ -1,10 +1,10 @@
 import torch
-from torchvision.models.segmentation import fcn_resnet50
 import numpy as np
 import matplotlib.pyplot as plt
 from nets import get_resnet_50_adapted
 from initializers import resnet_constant_init
 from config import config
+
 
 def experiment_field_size_resnet50_by_forward_pass() -> None:
     net = get_resnet_50_adapted()

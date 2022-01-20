@@ -7,13 +7,14 @@ import constants
 from utils import JobTimer
 from initializers import decomposed_init
 
-
+RESULT_SAVE_BASE_FILENAME = \
+    'experiment_field_size_vs_depth_res_decomposed_init.npy'
 
 
 def experiment_field_size_vs_depth_res_decomposed_init():
     distances = np.arange(7, 18 + 1)
     depthes = np.arange(2, 18 + 1, 2)
-    RESULT_SAVE_BASE_FILENAME = 'experiment_field_size_vs_depth_res_decomposed_init.npy'
+
     save_path = constants.SAVE_EXPERIMENTS_RESULTS_DIR\
                 + '/' + RESULT_SAVE_BASE_FILENAME
     n_trains = distances.size * depthes.size
@@ -29,7 +30,6 @@ def experiment_field_size_vs_depth_res_decomposed_init():
             decomposed_init(net)
             trainer = Trainer(dataset=dataset, net=net)
             trainer()
-            net = trainer.net
 
             evaluator = PostTrainEvaluator(trainer=trainer)
             loss, accuracy = evaluator()

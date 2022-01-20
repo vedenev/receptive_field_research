@@ -5,12 +5,14 @@ from train import PostTrainEvaluator
 import numpy as np
 import constants
 from utils import JobTimer
-import torch
 
 
-def experiment_field_size_resnet50():
+RESULT_SAVE_BASE_FILENAME = 'experiment_field_size_vs_depth_resnet50.npy'
+
+
+def experiment_field_size_resnet50() -> None:
     distances = np.arange(8, 110 + 1, 2)
-    RESULT_SAVE_BASE_FILENAME = 'experiment_field_size_vs_depth_resnet50.npy'
+
     save_path = constants.SAVE_EXPERIMENTS_RESULTS_DIR \
         + '/' + RESULT_SAVE_BASE_FILENAME
     n_trains = distances.size

@@ -5,9 +5,12 @@ from config import config
 import torch
 from initializers import decomposed_init
 
-def experiment_field_size_by_forward_pass_decomposed_init():
+RESULT_SAVE_BASE_FILENAME = 'experiment_field_size_by_forward_pass_decomposed_init.npz'
+
+
+def experiment_field_size_by_forward_pass_decomposed_init() -> None:
     depthes = np.arange(2, 24 + 1, 2)
-    RESULT_SAVE_BASE_FILENAME = 'experiment_field_size_by_forward_pass_decomposed_init.npz'
+
     save_path = constants.SAVE_EXPERIMENTS_RESULTS_DIR\
                 + '/' + RESULT_SAVE_BASE_FILENAME
     image_size = config.by_forward_pass.image_size
@@ -32,7 +35,6 @@ def experiment_field_size_by_forward_pass_decomposed_init():
         radial_np = np.abs(radial_np)
         radial_np = radial_np / np.max(radial_np)
         save_data[:, depth_index] = radial_np
-
 
     np.savez(save_path,
              depthes=depthes,

@@ -7,11 +7,13 @@ import constants
 from utils import JobTimer
 from initializers import circular_init
 
+RESULT_SAVE_BASE_FILENAME = \
+    'experiment_field_size_vs_depth_dot_360_no_init_x2_narrower.npy'
 
-def experiment_field_size_vs_depth_dot_circular():
+
+def experiment_field_size_vs_depth_dot_circular() -> None:
     distances = np.arange(7, 24 + 1, 2)
     depthes = np.arange(3, 48 + 1, 2)
-    RESULT_SAVE_BASE_FILENAME = 'experiment_field_size_vs_depth_dot_360_no_init_x2_narrower.npy'
     save_path = constants.SAVE_EXPERIMENTS_RESULTS_DIR\
                 + '/' + RESULT_SAVE_BASE_FILENAME
     n_trains = distances.size * depthes.size
@@ -27,7 +29,6 @@ def experiment_field_size_vs_depth_dot_circular():
             #circular_init(net)
             trainer = Trainer(dataset=dataset, net=net)
             trainer()
-            net = trainer.net
 
             evaluator = PostTrainEvaluator(trainer=trainer)
             loss, accuracy = evaluator()

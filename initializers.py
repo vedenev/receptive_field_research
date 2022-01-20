@@ -2,11 +2,12 @@ import torch
 import numpy as np
 from typing import Tuple
 
+ADD_NOISE = True
+IS_DECAY = True
+
+
 def decomposed_init(net: torch.nn.Module) -> None:
     N = len(net.convs)
-
-    ADD_NOISE = True
-    IS_DECAY = True
 
     phi = 2 * np.pi / (2 * N + 1)
 
@@ -49,10 +50,12 @@ def decomposed_init(net: torch.nn.Module) -> None:
     for conv_skip in net.convs_skip:
         conv_skip.weight.data.fill_(0.0)
 
+
+CIRCULAR_AMPLITUDE = 0.2
+
+
 def circular_init(net: torch.nn.Module) -> None:
     N = len(net.convs)
-
-    CIRCULAR_AMPLITUDE = 0.2
 
     n_featuremaps = list(net.convs[1].weight.shape)[0]
 
@@ -128,10 +131,12 @@ def copy_indexes(dx0: int) -> Tuple[int, int, int, int]:
     return x1_src, x2_src, x1_dst, x2_dst
 
 
+DECREASE_FACTOR = 0.6
+
+
 def circular_init_version_2(net: torch.nn.Module) -> None:
     N = len(net.convs)
 
-    DECREASE_FACTOR = 0.6
     n_featuremaps = list(net.convs[1].weight.shape)[0]
 
     from config import config
@@ -157,7 +162,6 @@ def circular_init_version_2(net: torch.nn.Module) -> None:
     for conv in net.convs:
         shape = list(conv.weight.shape)
 
-
         torch.nn.init.xavier_uniform_(conv.weight)
         weight_to_set_np = conv.weight.cpu().detach().numpy()
         if i == (len(net.convs) - 1):
@@ -178,7 +182,6 @@ def circular_init_version_2(net: torch.nn.Module) -> None:
 
                 weight_to_set_np[output_index, input_index, y1_dst: y2_dst, x1_dst: x2_dst] = \
                     weight_to_set_np_2[output_index, input_index, y1_src: y2_src, x1_src: x2_src]
-
 
         weight_to_set = torch.from_numpy(weight_to_set_np)
         conv.weight.data = weight_to_set.data

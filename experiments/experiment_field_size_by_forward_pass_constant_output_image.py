@@ -4,7 +4,8 @@ from config import config
 import torch
 import matplotlib.pyplot as plt
 
-def experiment_field_size_by_forward_pass_constant_output_image():
+
+def experiment_field_size_by_forward_pass_constant_output_image() -> None:
     image_size = config.by_forward_pass.image_size
     center = image_size // 2
     input_image = np.zeros((1, 1, image_size, image_size), np.float32)

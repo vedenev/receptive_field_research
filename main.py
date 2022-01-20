@@ -1,12 +1,21 @@
 import fire
 
-DEFAULT_SCRIPT = "experiment_field_size_by_forward_pass_constant_output_image"
+DEFAULT_SCRIPT = "scripts_list"
 
-def run_script(script : str = DEFAULT_SCRIPT):
-    if script == "experiment_field_size_vs_depth":
+
+def run_script(script: str = DEFAULT_SCRIPT) -> None:
+
+    """
+    Type python3 main.py to get list of script names
+    """
+
+    if script == DEFAULT_SCRIPT:
+        from utils import print_scripts_list
+        print_scripts_list()
+    elif script == "experiment_field_size_vs_depth":
         from experiments import experiment_field_size_vs_depth
         experiment_field_size_vs_depth()
-    if script == "experiment_field_size_vs_depth_res":
+    elif script == "experiment_field_size_vs_depth_res":
         from experiments import experiment_field_size_vs_depth_res
         experiment_field_size_vs_depth_res()
     elif script == "plot_field_size_vs_depth":
@@ -48,15 +57,14 @@ def run_script(script : str = DEFAULT_SCRIPT):
     elif script == "experiment_field_size_resnet50_by_forward_pass":
         from experiments import experiment_field_size_resnet50_by_forward_pass
         experiment_field_size_resnet50_by_forward_pass()
-    elif script == "experiment_field_size_resnet50":
-        from experiments import experiment_field_size_resnet50
-        experiment_field_size_resnet50()
     elif script == "plot_field_size_resnet":
         from visualization_utils import plot_field_size_resnet
         plot_field_size_resnet()
     elif script == "experiment_field_size_by_forward_pass_constant_output_image":
         from experiments import experiment_field_size_by_forward_pass_constant_output_image
         experiment_field_size_by_forward_pass_constant_output_image()
+    else:
+        print("unexpected script name, type python3 main.py to get help")
 
 
 if __name__ == '__main__':

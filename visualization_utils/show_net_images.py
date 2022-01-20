@@ -2,21 +2,20 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
+
 def imshow_tensor(image):
-     image = image.cpu().detach().numpy()
-     image = image[0, :, :]
-     image[image < 0.0] = 0.0
-     image[image > 1.0] = 1.0
-     image = 255.0 * image
-     image = image.astype(np.uint8)
-     plt.imshow(image, cmap='gray', vmin=0, vmax=255)
+    image = image.cpu().detach().numpy()
+    image = image[0, :, :]
+    image[image < 0.0] = 0.0
+    image[image > 1.0] = 1.0
+    image = 255.0 * image
+    image = image.astype(np.uint8)
+    plt.imshow(image, cmap='gray', vmin=0, vmax=255)
+
 
 def show_net_images(net, data_iterator, device):
     net.eval()
     with torch.no_grad():
-
-
-
         plt.close("all")
         for batch_index in range(2):
             batch = next(data_iterator)

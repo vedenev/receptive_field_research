@@ -1,0 +1,21 @@
+usage:
+python3 main.py SCRIPT
+where SCRIPT is script name.
+it can be:
+experiment_field_size_vs_depth  - to start trains to get field size vs depth data
+experiment_field_size_vs_depth_res  - same as previous but with net with residual connections
+plot_field_size_vs_depth  - to plot field size vs depth data saved
+experiment_field_size_vs_depth_thiner  - to start trains with thinner ner
+experiment_field_size_by_forward_pass  - to get field size graph by forward pass
+experiment_field_size_by_forward_pass_for_shifted  - to get field size by forward pass with special initial condition, that shifted
+plot_field_size_by_forward_pass  - to plot filed size graph done by forward pass
+experiment_field_size_by_forward_pass_constant  - to get field size by forward pass with constant initial weights initialization
+experiment_field_size_resnet50  - to get field size for ResNet50 by trains 
+experiment_field_size_vs_depth_res_decomposed_init  - to get field size with decomposed initial condition
+experiment_field_size_by_forward_pass_decomposed_init  - to get field size with decomposed initial condition with forward pass
+plot_field_size_by_forward_pass_decomposed_init  - to plot filed size for decomposed initial condition
+show_dataset  - to plot dataset, to test dataset generator
+experiment_field_size_vs_depth_dot_circular  - to get field size with circular initial condition with forward pass
+experiment_field_size_resnet50_by_forward_pass  - to get field size for ResNet50 by forward pass
+plot_field_size_resnet  - to plot field size for ResNet50 
+experiment_field_size_by_forward_pass_constant_output_image  - to output after forward pass with constant weights for the net 
