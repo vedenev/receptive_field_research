@@ -44,7 +44,7 @@ Let the convolution kernel have all elements are positive numbers.
 Let we have N successive convolutions of size s.
 So the final distribution is convolution of convolutions of convolutions etc.  
 According to the wikipedia article the final distribution is distribution of sum of random variables.  
-Form the other had we have [central limit theorem](https://en.wikipedia.org/wiki/Central_limit_theorem)  
+Form the other hand we have [central limit theorem](https://en.wikipedia.org/wiki/Central_limit_theorem)  
 It says that the distribution of sum is normal distribution with parameters:  
 expected value: mu = sum(mu_i)  
 variance: sigma^2 = sum(sigma_i^2)  
