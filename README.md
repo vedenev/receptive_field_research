@@ -41,14 +41,14 @@ Convolution is used in probability distribution:
 [wikipedia: Convolution of probability distributions](https://en.wikipedia.org/wiki/Convolution_of_probability_distributions)    
 So let consider the kernel as a distribution.  
 Let the convolution kernel have all elements are positive numbers.    
-Let we have N successive convolutions of size s.
+Let we have N successive convolutions of size s.  
 So the final distribution is convolution of convolutions of convolutions etc.  
 According to the wikipedia article the final distribution is distribution of sum of random variables.  
 Form the other hand we have [central limit theorem](https://en.wikipedia.org/wiki/Central_limit_theorem)  
 It says that the distribution of sum is normal distribution with parameters:  
 expected value: mu = sum(mu_i)  
 variance: sigma^2 = sum(sigma_i^2)  
-Let considered that elements of the kernels has no special shifts so mu_i = 0
+Let considered that elements of the kernels has no special shifts so mu_i = 0  
 Size of the kernel is 3x3 so sigma_i = 3  
 Then size of the final distribution is sqrt(sigma^2) = sigma = sqrt(sum(3^2)) = O(sqrt(N))  
 Please note: there is no any random variables inside the convolution.  
