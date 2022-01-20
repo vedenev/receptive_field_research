@@ -59,8 +59,8 @@ For example we have a net: 3x3 convolution - 2x2 pool - 3x3 convolution, then we
 here we have 3*2 because after pooling featuremaps has decreased in 2 times resolution.  
 Another way to get O(sqrt(N)):  
 Let we have net of convolutional N layers with fixed kernel size.  
-Then degrees of freedom is O(N).
-To encode a field size R we need to have degrees of freedom O(R^2).
+Then degrees of freedom is O(N).  
+To encode a field size R we need to have degrees of freedom O(R^2).  
 Thus R^2 = O(N) or R = O(sqrt(N))   
   
 #### 4. e dataset and no pooling net  
